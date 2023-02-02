@@ -1,0 +1,51 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE hibernate-configuration SYSTEM
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+
+        <property name = "hibernate.dialect">
+            org.hibernate.dialect.MySQL8Dialect
+        </property>
+
+        <property name = "hibernate.connection.driver_class">
+            com.mysql.cj.jdbc.Driver
+        </property>
+
+        <property name = "hibernate.connection.url">
+            jdbc:mysql://localhost:3306/myProject?serverTimezone=UTC
+        </property>
+
+
+        <property name = "hibernate.connection.username">
+            root
+        </property>
+
+        <property name = "hibernate.connection.password">
+            1992svyat
+        </property>
+
+        <property name="connection.pool_size">
+            3
+        </property>
+
+        <!--<property name="cache.provider_class">
+            org.hibernate.cache.NoCacheRegionFactoryAvailableException
+        </property>-->
+
+        <property name="hbm2ddl.auto">update</property> <!--создаст табл автоматом
+                               если поставить update то будет обновлять ТОЛЬКО существующию табл
+                                если read -только чтение-->
+
+        <property name="show_sql">true</property>
+
+
+        <mapping class="MyProject.entity.Employee" /> <!--привязка к классу-сущности-таблицы -->
+        <mapping class="MyProject.entity.WorkingShift" />
+        <mapping class="MyProject.entity.WorkDays" />
+        <mapping class="MyProject.entity.Schedule" />
+        <mapping class="MyProject.entity.FreeSchedule" />
+        <mapping class="MyProject.entity.Plan" />
+
+    </session-factory>
+</hibernate-configuration>
