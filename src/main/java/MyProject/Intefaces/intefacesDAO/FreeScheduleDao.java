@@ -10,7 +10,9 @@ public interface FreeScheduleDao {
     List<FreeSchedule> getAll();
 
     void createAll();
+
     void addFree(Plan p);
+
     void removeByID(int id);
 
     void deleteAll();

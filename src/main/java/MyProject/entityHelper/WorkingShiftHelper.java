@@ -19,10 +19,9 @@ public class WorkingShiftHelper implements WorkingShiftDao {
 
     private static SessionFactory sessionFactory;
 
-    public WorkingShiftHelper(){
+    public WorkingShiftHelper() {
         sessionFactory = HibernateUtil.getFactory();
     }
-
 
     @Override
     public Optional<WorkingShift> getById(int id) {
@@ -41,9 +40,7 @@ public class WorkingShiftHelper implements WorkingShiftDao {
         criteriaQuery.select(root);
         Query query = session.createQuery(criteriaQuery);
         List<WorkingShift> shifts = query.getResultList();
-
         session.close();
-
         return shifts;
     }
 
@@ -60,11 +57,9 @@ public class WorkingShiftHelper implements WorkingShiftDao {
     public void update(int id, LocalTime[] params) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-
         WorkingShift workingShift = session.get(WorkingShift.class, id);
         workingShift.setStart(params[0]);
         workingShift.setEnd(params[1]);
-
         session.update(workingShift);
         session.getTransaction().commit();
         session.close();
@@ -78,6 +73,5 @@ public class WorkingShiftHelper implements WorkingShiftDao {
         session.delete(shift);
         session.getTransaction().commit();
         session.close();
-
     }
 }

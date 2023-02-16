@@ -7,15 +7,15 @@ import java.util.List;
 import java.util.Optional;
 
 public interface WorkDaysDao {
-
     List<WorkDays> getAll();
+
     void add(WorkDays day);
 
-   Optional <WorkDays>  getById(int id);
+    Optional<WorkDays> getById(int id);
 
-    void delete (int id);
+    void delete(int id);
 
-    void deleteAll ();
+    void deleteAll();
 
     void createFromDate(LocalDate date);
 

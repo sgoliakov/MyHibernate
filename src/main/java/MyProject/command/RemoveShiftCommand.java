@@ -10,7 +10,6 @@ import org.hibernate.HibernateException;
 public class RemoveShiftCommand implements CommandInfo {
     @Override
     public String execute(HttpServletRequest request) {
-
         int id = Integer.parseInt(request.getParameter("id"));
         System.out.println(id);
         MyDAOFactory factory = FactoryDAO.getFactory();
@@ -22,6 +21,5 @@ public class RemoveShiftCommand implements CommandInfo {
             request.setAttribute("Remove", "not");
         }
         return "controller?action=free_schedule_shifts";
-
     }
 }

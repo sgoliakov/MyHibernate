@@ -8,9 +8,12 @@ import java.util.List;
 
 public interface ScheduleDao {
     List<Schedule> getById(int id);
-    List<Schedule> getAll();
-    void add(Schedule schedule);
-    int deleteByEmployeeDate (Employee emp, WorkDays day);
-    void deleteAll();
 
+    List<Schedule> getAll();
+
+    void add(Schedule schedule);
+
+    int deleteByEmployeeDate(Employee emp, WorkDays day);
+
+    void deleteAll();
 }

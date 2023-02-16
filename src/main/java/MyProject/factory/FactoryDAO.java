@@ -4,21 +4,17 @@ import MyProject.Intefaces.intefacesDAO.*;
 import MyProject.entityHelper.*;
 
 public class FactoryDAO implements MyDAOFactory {
-
     private static MyDAOFactory factory;
 
     private FactoryDAO() {
-
     }
 
-    public static synchronized MyDAOFactory getFactory(){
-        if (factory == null){
+    public static synchronized MyDAOFactory getFactory() {
+        if (factory == null) {
             factory = new FactoryDAO();
         }
         return factory;
-
     }
-
 
     @Override
     public EmployeeDao getEmployeeDao() {
@@ -49,6 +45,4 @@ public class FactoryDAO implements MyDAOFactory {
     public PlanDao getPlanDao() {
         return new PlanHelper();
     }
-
-
 }

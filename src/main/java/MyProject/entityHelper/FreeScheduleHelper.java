@@ -23,10 +23,9 @@ import java.util.Optional;
 public class FreeScheduleHelper implements FreeScheduleDao {
     private static SessionFactory sessionFactory;
 
-    public FreeScheduleHelper(){
+    public FreeScheduleHelper() {
         sessionFactory = HibernateUtil.getFactory();
     }
-
 
     @Override
     public List<FreeSchedule> getAll() {
@@ -37,9 +36,7 @@ public class FreeScheduleHelper implements FreeScheduleDao {
         criteriaQuery.select(root);
         Query query = session.createQuery(criteriaQuery);
         List<FreeSchedule> freeSchedules = query.getResultList();
-
         session.close();
-
         return freeSchedules;
     }
 
@@ -49,33 +46,28 @@ public class FreeScheduleHelper implements FreeScheduleDao {
         session.beginTransaction();
         deleteAll();
         session.createSQLQuery("ALTER TABLE freeschedule AUTO_INCREMENT=0").executeUpdate();
-
         MyDAOFactory factory = FactoryDAO.getFactory();
         WorkDaysDao workDaysDao = factory.getWorkDaysDao();
         WorkingShiftDao workingShiftDao = factory.getWorkingShiftDao();
-        
-            List<WorkDays> days = workDaysDao.getAll();
-            List<WorkingShift> shifts = workingShiftDao.getAll();
-
-            boolean flag = false;
-            int d = 0;
-
+        List<WorkDays> days = workDaysDao.getAll();
+        List<WorkingShift> shifts = workingShiftDao.getAll();
+        boolean flag = false;
+        int d = 0;
         while (!flag) {
             for (int j = 0; j < shifts.size(); j++) {
                 FreeSchedule freeSchedule = new FreeSchedule();
-                 freeSchedule.setDay(days.get(d));
-                    freeSchedule.setShift(shifts.get(j));
-                      session.save(freeSchedule);
-                      session.flush();
+                freeSchedule.setDay(days.get(d));
+                freeSchedule.setShift(shifts.get(j));
+                session.save(freeSchedule);
+                session.flush();
             }
             d++;
-            if (d == days.size()){
+            if (d == days.size()) {
                 flag = true;
             }
-          }
+        }
         session.getTransaction().commit();
         session.close();
-
     }
 
     @Override
@@ -85,23 +77,20 @@ public class FreeScheduleHelper implements FreeScheduleDao {
                 .shift(p.getShift())
                 .build();
         Session session = sessionFactory.openSession();
-          session.beginTransaction();
-           session.save(freeSchedule);
-            session.getTransaction().commit();
+        session.beginTransaction();
+        session.save(freeSchedule);
+        session.getTransaction().commit();
         session.close();
     }
 
     @Override
     public void removeByID(int id) {
-
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         FreeSchedule day = session.find(FreeSchedule.class, id);
         session.delete(day);
-
         session.getTransaction().commit();
         session.close();
-
     }
 
     @Override

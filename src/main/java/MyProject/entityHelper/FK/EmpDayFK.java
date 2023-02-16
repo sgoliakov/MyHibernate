@@ -1,6 +1,5 @@
 package MyProject.entityHelper.FK;
 
-
 import MyProject.entity.Employee;
 import MyProject.entity.WorkDays;
 import lombok.*;
@@ -15,12 +14,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
 
-
-
 @Getter
 @Setter
 @ToString
-//@RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -29,16 +25,11 @@ import java.io.Serializable;
 @DynamicInsert
 @Embeddable
 public class EmpDayFK implements Serializable {
-
-
-        @OneToOne
-        @OnDelete(action = OnDeleteAction.CASCADE)
-        @JoinColumn(name = "employee_id")
-        private Employee employee;
-
-        @OneToOne
-        @JoinColumn(name = "work_day_id")
-        private WorkDays workDay;
-
-
+    @OneToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "employee_id")
+    private Employee employee;
+    @OneToOne
+    @JoinColumn(name = "work_day_id")
+    private WorkDays workDay;
 }

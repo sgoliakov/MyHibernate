@@ -15,18 +15,16 @@ public class ShowMyScheduleCommand implements MyProject.Intefaces.intefacesComma
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
         Employee employee = (Employee) session.getAttribute("employee");
-          MyDAOFactory factory = FactoryDAO.getFactory();
-          ScheduleDao scheduleDao = factory.getScheduleDao();
-            List<Schedule> byId = scheduleDao.getById(employee.getId());
-                byId.forEach(System.out::println);
-                if (byId == null){
-                    request.setAttribute("notExists","You don`t have shifts");
-                }else {
-                    session.setAttribute("mySchedule", byId);
-                }
-
+        MyDAOFactory factory = FactoryDAO.getFactory();
+        ScheduleDao scheduleDao = factory.getScheduleDao();
+        List<Schedule> byId = scheduleDao.getById(employee.getId());
+        byId.forEach(System.out::println);
+        if (byId == null) {
+            request.setAttribute("notExists", "You don`t have shifts");
+        } else {
+            session.setAttribute("mySchedule", byId);
+        }
         String resultPage = (byId == null) ? "controller?action=main" : "mySchedule.jsp";
-
-                return resultPage;
+        return resultPage;
     }
 }

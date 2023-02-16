@@ -16,37 +16,27 @@ import java.util.Optional;
 public class AddShiftCommand implements CommandInfo {
     @Override
     public String execute(HttpServletRequest request) {
-       HttpSession session = request.getSession();
+        HttpSession session = request.getSession();
         MyDAOFactory factory = FactoryDAO.getFactory();
-          FreeScheduleDao freeScheduleDao = factory.getFreeScheduleDao();
-
-         Employee employee = (Employee) session.getAttribute("employee");
-          int id = Integer.parseInt(request.getParameter("id")) ;
-
-            Optional <FreeSchedule> optional = freeScheduleDao.getById(id);
-
-        if (optional.isPresent()){
-
+        FreeScheduleDao freeScheduleDao = factory.getFreeScheduleDao();
+        Employee employee = (Employee) session.getAttribute("employee");
+        int id = Integer.parseInt(request.getParameter("id"));
+        Optional<FreeSchedule> optional = freeScheduleDao.getById(id);
+        if (optional.isPresent()) {
             FreeSchedule freeSchedule = optional.get();
-
-                freeScheduleDao.removeByID(freeSchedule.getId());
-
-                    EmpDayFK fk = EmpDayFK.builder()
-                        .employee(employee)
-                        .workDay(freeSchedule.getDay())
-                        .build();
-
-                Schedule schedule = Schedule.builder()
-                        .fk(fk)
-                        .shift(freeSchedule.getShift())
-                        .build();
-
-                factory.getScheduleDao().add(schedule);
-
-        }else {
+            freeScheduleDao.removeByID(freeSchedule.getId());
+            EmpDayFK fk = EmpDayFK.builder()
+                    .employee(employee)
+                    .workDay(freeSchedule.getDay())
+                    .build();
+            Schedule schedule = Schedule.builder()
+                    .fk(fk)
+                    .shift(freeSchedule.getShift())
+                    .build();
+            factory.getScheduleDao().add(schedule);
+        } else {
             request.setAttribute("notExists", "This schedule not exists");
         }
-
         return "controller?action=schedule_by_id";
     }
 }

@@ -17,15 +17,12 @@ import java.io.Serializable;
 @DynamicUpdate
 @DynamicInsert
 public class Plan implements Serializable, Comparable<Plan> {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     @OneToOne
     @JoinColumn(name = "day_id")
     private WorkDays day;
-
     @OneToOne
     @JoinColumn(name = "shifts_id")
     private WorkingShift shift;
@@ -34,5 +31,4 @@ public class Plan implements Serializable, Comparable<Plan> {
     public int compareTo(Plan o) {
         return this.getDay().compareTo(o.getDay());
     }
-
 }

@@ -18,20 +18,18 @@ import java.util.List;
 import java.util.Optional;
 
 public class PlanHelper implements PlanDao {
-
     private static SessionFactory sessionFactory;
 
-    public PlanHelper(){
+    public PlanHelper() {
         sessionFactory = HibernateUtil.getFactory();
     }
-
 
     @Override
     public List<Plan> getAll() {
         Session session = sessionFactory.openSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(Plan.class);//CriteriaQuery-подготовкаЗапроса
-        Root<WorkDays> root = criteriaQuery.from(Plan.class);//условия для запроса
+        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(Plan.class);
+        Root<WorkDays> root = criteriaQuery.from(Plan.class);
         criteriaQuery.select(root);
         javax.persistence.Query query = session.createQuery(criteriaQuery);
         List<Plan> daysList = query.getResultList();
@@ -75,16 +73,12 @@ public class PlanHelper implements PlanDao {
         MyDAOFactory factory = FactoryDAO.getFactory();
         WorkDaysDao workDaysDao = factory.getWorkDaysDao();
         WorkingShiftDao workingShiftDao = factory.getWorkingShiftDao();
-
         deleteAll();
         session.createSQLQuery("ALTER TABLE plan AUTO_INCREMENT=0").executeUpdate();
-
         List<WorkDays> days = workDaysDao.getAll();
         List<WorkingShift> shifts = workingShiftDao.getAll();
-
         boolean flag = false;
         int d = 0;
-
         while (!flag) {
             for (int j = 0; j < shifts.size(); j++) {
                 Plan plan = new Plan();
@@ -94,13 +88,11 @@ public class PlanHelper implements PlanDao {
                 session.flush();
             }
             d++;
-            if (d == days.size()){
+            if (d == days.size()) {
                 flag = true;
             }
         }
         session.getTransaction().commit();
         session.close();
-
     }
-
 }

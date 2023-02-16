@@ -28,7 +28,6 @@ public class Employee implements Serializable {
     private boolean isAdmin;
     private String password;
 
-
     @Override
     public boolean equals(Object o) {
         if (o.getClass() == this.getClass()) {
@@ -38,12 +37,10 @@ public class Employee implements Serializable {
         return false;
     }
 
-
     @Override
     public int hashCode() {
         int result = 31;
-        result = 31 * result + ( (getFirstName() != null) ? getFirstName().hashCode() : 0);
+        result = 31 * result + ((getFirstName() != null) ? getFirstName().hashCode() : 0);
         return result;
     }
-
 }

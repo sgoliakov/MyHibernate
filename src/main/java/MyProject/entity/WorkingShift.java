@@ -12,23 +12,15 @@ import javax.persistence.Id;
 import java.io.Serializable;
 import java.time.LocalTime;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Entity
-
 public class WorkingShift implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-
     LocalTime start;
     LocalTime end;
-
-//old code
-//@OneToOne(mappedBy = "shift", fetch = FetchType.LAZY /*, cascade = CascadeType.ALL*/)
-//private Schedule schedule;
-
 }

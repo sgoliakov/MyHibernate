@@ -13,19 +13,17 @@ public class DeleteEmployeeCommand implements CommandInfo {
     @Override
     public String execute(HttpServletRequest request) {
         MyDAOFactory factory = FactoryDAO.getFactory();
-         EmployeeDao employeeDao = factory.getEmployeeDao();
-          int id = Integer.parseInt(request.getParameter("id"));
+        EmployeeDao employeeDao = factory.getEmployeeDao();
+        int id = Integer.parseInt(request.getParameter("id"));
         Optional<Employee> optional = employeeDao.getById(id);
         System.out.println(id);
-        if (optional.isPresent()){
+        if (optional.isPresent()) {
             Employee employee = optional.get();
-             employeeDao.deleteByID(employee.getId());
-             request.setAttribute("delete", "delete is OK");
+            employeeDao.deleteByID(employee.getId());
+            request.setAttribute("delete", "delete is OK");
         } else {
             request.setAttribute("delete", "delete is failed");
         }
-
-
         return "controller?action=show_employees";
     }
 }

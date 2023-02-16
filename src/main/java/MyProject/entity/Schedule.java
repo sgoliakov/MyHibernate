@@ -10,8 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
-
-
 @Getter
 @Setter
 @ToString
@@ -22,12 +20,9 @@ import javax.persistence.OneToOne;
 @DynamicUpdate
 @DynamicInsert
 public class Schedule {
-
     @EmbeddedId
     private EmpDayFK fk;
-
-    @OneToOne// old code (fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "shift_id")
     private WorkingShift shift;
-
 }

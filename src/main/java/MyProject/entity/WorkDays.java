@@ -9,7 +9,6 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 
-
 @Getter
 @Setter
 @ToString
@@ -19,14 +18,11 @@ import java.time.LocalDate;
 @Entity
 @DynamicUpdate
 @DynamicInsert
-
 public class WorkDays implements Serializable, Comparable<WorkDays> {
-
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private LocalDate day;
-
 
     @Override
     public int compareTo(WorkDays o) {

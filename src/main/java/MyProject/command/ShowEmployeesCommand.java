@@ -15,11 +15,10 @@ public class ShowEmployeesCommand implements CommandInfo {
         MyDAOFactory factory = FactoryDAO.getFactory();
         EmployeeDao employeeDao = factory.getEmployeeDao();
         Set<Employee> employees = employeeDao.getAll();
-
-         if (employees.isEmpty()){
-             request.setAttribute("notFound", "list employees is empty");
-         } request.setAttribute("employees", employees);
-
+        if (employees.isEmpty()) {
+            request.setAttribute("notFound", "list employees is empty");
+        }
+        request.setAttribute("employees", employees);
         return "employees.jsp";
     }
 }

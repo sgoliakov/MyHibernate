@@ -14,31 +14,23 @@ import java.util.List;
 public class ReportCommand implements CommandInfo {
     @Override
     public String execute(HttpServletRequest request) {
-
         MyDAOFactory factory = FactoryDAO.getFactory();
-         EmployeeDao employeeDao = factory.getEmployeeDao();
-          Long amountEmp = employeeDao.amountEmp();
-
+        EmployeeDao employeeDao = factory.getEmployeeDao();
+        Long amountEmp = employeeDao.amountEmp();
         ScheduleDao scheduleDao = factory.getScheduleDao();
-         List<Schedule> list = scheduleDao.getAll();
-
+        List<Schedule> list = scheduleDao.getAll();
         FreeScheduleDao freeScheduleDao = factory.getFreeScheduleDao();
         List<FreeSchedule> freeList = freeScheduleDao.getAll();
-
         LocalDate date = LocalDate.now();
-
         WorkDaysDao workDaysDao = factory.getWorkDaysDao();
         List<WorkDays> all = workDaysDao.getAll();
-        WorkDays workDay = all.get(all.size()-1);
+        WorkDays workDay = all.get(all.size() - 1);
         LocalDate lastDay = workDay.getDay();
-
         request.setAttribute("dayReport", date);
         request.setAttribute("lastDay", lastDay);
         request.setAttribute("amount", amountEmp);
         request.setAttribute("schedules", list);
         request.setAttribute("freeSchedules", freeList);
-
         return "report.jsp";
-
     }
 }

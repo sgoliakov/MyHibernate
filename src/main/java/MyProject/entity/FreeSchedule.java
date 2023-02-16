@@ -20,15 +20,12 @@ public class FreeSchedule implements Serializable, Comparable<FreeSchedule> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
     @OneToOne
     @JoinColumn(name = "day_id")
     private WorkDays day;
-
     @OneToOne
     @JoinColumn(name = "shifts_id")
     private WorkingShift shift;
-
 
     @Override
     public int compareTo(FreeSchedule o) {

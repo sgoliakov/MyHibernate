@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Optional;
 
 public class WorkDaysHelper implements WorkDaysDao {
-
     private static SessionFactory sessionFactory;
 
     public WorkDaysHelper() {
@@ -27,8 +26,8 @@ public class WorkDaysHelper implements WorkDaysDao {
     public List<WorkDays> getAll() {
         Session session = sessionFactory.openSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(WorkDays.class);//CriteriaQuery-подготовкаЗапроса
-        Root<WorkDays> root = criteriaQuery.from(WorkDays.class);//условия для запроса
+        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(WorkDays.class);
+        Root<WorkDays> root = criteriaQuery.from(WorkDays.class);
         criteriaQuery.select(root);
         Query query = session.createQuery(criteriaQuery);
         List<WorkDays> daysList = query.getResultList();
@@ -66,18 +65,14 @@ public class WorkDaysHelper implements WorkDaysDao {
     @Override
     public void deleteAll() {
         Session session = sessionFactory.openSession();
-
         session.beginTransaction();
-
         List<WorkDays> daysList = getAll();
         for (int i = 0; i < daysList.size(); i++) {
             WorkDays d = session.find(WorkDays.class, daysList.get(i).getId());
             session.delete(d);
-
-         }
+        }
         session.getTransaction().commit();
         session.close();
-
     }
 
     @Override
@@ -87,10 +82,10 @@ public class WorkDaysHelper implements WorkDaysDao {
         deleteAll();
         session.createSQLQuery("ALTER TABLE workdays AUTO_INCREMENT=0").executeUpdate();
         for (int i = 0; i < 30; i++) {
-         WorkDays day = new WorkDays();
-         day.setDay(date.plusDays(i));
-        session.save(day);
-    }
+            WorkDays day = new WorkDays();
+            day.setDay(date.plusDays(i));
+            session.save(day);
+        }
         session.getTransaction().commit();
         session.close();
     }
@@ -100,16 +95,11 @@ public class WorkDaysHelper implements WorkDaysDao {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         CriteriaBuilder builder = session.getCriteriaBuilder();
-
-        CriteriaDelete criteriaDelete =builder.createCriteriaDelete(WorkDays.class);
-
+        CriteriaDelete criteriaDelete = builder.createCriteriaDelete(WorkDays.class);
         Root<WorkDays> root = criteriaDelete.from(WorkDays.class);
-
         criteriaDelete.where(builder.equal(root.get("day"), date));
-
         Query query = session.createQuery(criteriaDelete);
         query.executeUpdate();
-
         session.getTransaction().commit();
         session.close();
     }

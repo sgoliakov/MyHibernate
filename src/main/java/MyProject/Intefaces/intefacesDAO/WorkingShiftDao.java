@@ -8,8 +8,12 @@ import java.util.Optional;
 
 public interface WorkingShiftDao {
     Optional<WorkingShift> getById(int id);
+
     List<WorkingShift> getAll();
+
     void add(WorkingShift shift);
+
     void update(int id, LocalTime[] params);
-    void deleteByID (int id);
+
+    void deleteByID(int id);
 }

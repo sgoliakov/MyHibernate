@@ -13,16 +13,13 @@ import java.util.List;
 public class ShowPlanCommand implements CommandInfo {
     @Override
     public String execute(HttpServletRequest request) {
-
         MyDAOFactory factory = FactoryDAO.getFactory();
         PlanDao planDao = factory.getPlanDao();
         List<Plan> plans = planDao.getAll();
         List<Plan> list = plans.stream()
                 .filter(s -> s.getDay().getDay().isAfter(LocalDate.now()))
                 .toList();
-
         request.setAttribute("planSchedule", list);
-
         return "adminCabinet.jsp";
     }
 }

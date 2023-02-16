@@ -19,44 +19,35 @@ import java.util.List;
 public class ScheduleHelper implements ScheduleDao {
     private static SessionFactory sessionFactory;
 
-    public ScheduleHelper(){
+    public ScheduleHelper() {
         sessionFactory = HibernateUtil.getFactory();
     }
-
 
     @Override
     public List<Schedule> getById(int id) {
         Session session = sessionFactory.openSession();
-
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
         CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(Employee.class);
-
         Root<Employee> root = criteriaQuery.from(Schedule.class);
-
-        criteriaQuery.select(root);//если забыть выполнить не будет работать
-        criteriaQuery.where( criteriaBuilder.equal( root.get("fk").get("employee").get("id"), id ));
-
-        javax.persistence.Query query = session.createQuery(criteriaQuery);//сам запрос
+        criteriaQuery.select(root);
+        criteriaQuery.where(criteriaBuilder.equal(root.get("fk").get("employee").get("id"), id));
+        javax.persistence.Query query = session.createQuery(criteriaQuery);
         List<Schedule> schedules = query.getResultList();
-
         session.close();
-
         return schedules;
     }
 
     @Override
     public List<Schedule> getAll() {
         List<Schedule> list = null;
-        try(Session session = sessionFactory.openSession()){
+        try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery cq = cb.createQuery(Schedule.class);
             Root<WorkingShift> shiftRoot = cq.from(Schedule.class);
             cq.select(shiftRoot);
-
             Query query = session.createQuery(cq);
-            list =query.getResultList();
-
-        }catch(Exception e){
+            list = query.getResultList();
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
@@ -75,10 +66,10 @@ public class ScheduleHelper implements ScheduleDao {
     public int deleteByEmployeeDate(Employee emp, WorkDays day) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-            EmpDayFK fk = new EmpDayFK();
-            fk.setEmployee(emp);
-            fk.setWorkDay(day);
-        String hql = "DELETE FROM Schedule "  +
+        EmpDayFK fk = new EmpDayFK();
+        fk.setEmployee(emp);
+        fk.setWorkDay(day);
+        String hql = "DELETE FROM Schedule " +
                 "WHERE id = :employee_id";
         Query query = session.createQuery(hql);
         query.setParameter("employee_id", fk);
@@ -87,6 +78,7 @@ public class ScheduleHelper implements ScheduleDao {
         session.close();
         return result;
     }
+
     @Override
     public void deleteAll() {
         Session session = sessionFactory.openSession();
@@ -96,6 +88,5 @@ public class ScheduleHelper implements ScheduleDao {
         query.executeUpdate();
         session.getTransaction().commit();
         session.close();
-
     }
 }

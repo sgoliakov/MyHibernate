@@ -11,20 +11,17 @@ import jakarta.servlet.http.HttpSession;
 import java.util.Set;
 
 public class RegisterCommand implements CommandInfo {
-   private boolean flag = false;
+    private boolean flag = false;
+
     @Override
     public String execute(HttpServletRequest request) {
-//добавляем нового работника
-//получаем из запроса
         String firstName = request.getParameter("firstName");
         String lastName = request.getParameter("lastName");
-
         String mail = request.getParameter("mail");
         String phone = request.getParameter("phone");
         String password = request.getParameter("password");
         boolean admin = Boolean.parseBoolean(request.getParameter("admin"));
         System.out.println(admin);
-
         Employee employee = Employee.builder()
                 .firstName(firstName)
                 .lastName(lastName)
@@ -33,27 +30,21 @@ public class RegisterCommand implements CommandInfo {
                 .isAdmin(admin)
                 .password(password)
                 .build();
-
         MyDAOFactory myDAOFactory = FactoryDAO.getFactory();
         EmployeeDao employeeDao = myDAOFactory.getEmployeeDao();
-
-             Set<Employee> employees = employeeDao.getAll();
-
-        if (!employees.contains(employee)){
+        Set<Employee> employees = employeeDao.getAll();
+        if (!employees.contains(employee)) {
             employeeDao.add(employee);
             flag = true;
         }
         System.out.println(flag);
-
-        if (!flag){
+        if (!flag) {
             request.setAttribute("notAdd", "This employee exists");
         } else {
             HttpSession session = request.getSession();
             session.setAttribute("employee", employee);
         }
-
         String result = (!flag) ? "register.jsp" : "controller?action=main";
-       return result;
-
+        return result;
     }
 }

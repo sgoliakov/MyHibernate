@@ -19,26 +19,22 @@ public class FreeScheduleShiftsCommand implements CommandInfo {
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-         MyDAOFactory factory = FactoryDAO.getFactory();
-
-          ScheduleDao scheduleDao = factory.getScheduleDao();
-           FreeScheduleDao freeScheduleDao = factory.getFreeScheduleDao();
-            Employee employee = (Employee) session.getAttribute("employee");
-
-            if (employee.isAdmin()){
-                List<FreeSchedule> freeSchedules = freeScheduleDao.getAll();
-                List<FreeSchedule> list = freeSchedules.stream()
-                        .filter(s -> s.getDay().getDay().isAfter(LocalDate.now()))
-                        .toList();
-                request.setAttribute("freeSchedule", list);
-            }else {
-                List<Schedule> mySchedule = scheduleDao.getById(employee.getId());
-                List<FreeSchedule> freeSchedules = freeScheduleDao.getAll();
-                List<FreeSchedule> list = MySortedFreeSchedule.getAvailableFreeSchedule(mySchedule, freeSchedules);
-                request.setAttribute("freeSchedule", list);
-            }
-
-
+        MyDAOFactory factory = FactoryDAO.getFactory();
+        ScheduleDao scheduleDao = factory.getScheduleDao();
+        FreeScheduleDao freeScheduleDao = factory.getFreeScheduleDao();
+        Employee employee = (Employee) session.getAttribute("employee");
+        if (employee.isAdmin()) {
+            List<FreeSchedule> freeSchedules = freeScheduleDao.getAll();
+            List<FreeSchedule> list = freeSchedules.stream()
+                    .filter(s -> s.getDay().getDay().isAfter(LocalDate.now()))
+                    .toList();
+            request.setAttribute("freeSchedule", list);
+        } else {
+            List<Schedule> mySchedule = scheduleDao.getById(employee.getId());
+            List<FreeSchedule> freeSchedules = freeScheduleDao.getAll();
+            List<FreeSchedule> list = MySortedFreeSchedule.getAvailableFreeSchedule(mySchedule, freeSchedules);
+            request.setAttribute("freeSchedule", list);
+        }
         return "freeScheduleShift.jsp";
     }
 }
