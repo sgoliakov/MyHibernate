@@ -16,7 +16,7 @@
     <p>${shift.fk.workDay} : ${shift.shift}</p>
 </с:forEach>
 <с:if test="${not empty requestScope.notExists}">
-    <p>This schedule not exists</p>
+    <p></p>
 </с:if>
 <form method="post" action="controller?action=main">
     <input type="submit" value="Go to main"/>

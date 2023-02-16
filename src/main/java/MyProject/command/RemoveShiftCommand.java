@@ -11,7 +11,6 @@ public class RemoveShiftCommand implements CommandInfo {
     @Override
     public String execute(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("id"));
-        System.out.println(id);
         MyDAOFactory factory = FactoryDAO.getFactory();
         FreeScheduleDao freeScheduleDao = factory.getFreeScheduleDao();
         try {

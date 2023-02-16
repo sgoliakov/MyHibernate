@@ -17,11 +17,9 @@ public class AddNewShiftCommand implements CommandInfo {
         FreeScheduleDao freeScheduleDao = factory.getFreeScheduleDao();
         PlanDao planDao = factory.getPlanDao();
         int id = Integer.parseInt(request.getParameter("id"));
-        System.out.println(id);
         Optional<Plan> optional = planDao.getById(id);
         if (optional.isPresent()) {
             Plan plan = optional.get();
-            System.out.println(plan);
             freeScheduleDao.addFree(plan);
             request.setAttribute("Add", "added");
         } else request.setAttribute("notAdd", "unsuccessful");

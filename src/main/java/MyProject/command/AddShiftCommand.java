@@ -35,7 +35,7 @@ public class AddShiftCommand implements CommandInfo {
                     .build();
             factory.getScheduleDao().add(schedule);
         } else {
-            request.setAttribute("notExists", "This schedule not exists");
+            request.setAttribute("notExists", "This schedule not Exists");
         }
         return "controller?action=schedule_by_id";
     }

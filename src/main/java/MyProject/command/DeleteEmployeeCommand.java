@@ -16,7 +16,6 @@ public class DeleteEmployeeCommand implements CommandInfo {
         EmployeeDao employeeDao = factory.getEmployeeDao();
         int id = Integer.parseInt(request.getParameter("id"));
         Optional<Employee> optional = employeeDao.getById(id);
-        System.out.println(id);
         if (optional.isPresent()) {
             Employee employee = optional.get();
             employeeDao.deleteByID(employee.getId());

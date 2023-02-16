@@ -11,8 +11,6 @@ import jakarta.servlet.http.HttpSession;
 import java.util.Set;
 
 public class RegisterCommand implements CommandInfo {
-    private boolean flag = false;
-
     @Override
     public String execute(HttpServletRequest request) {
         String firstName = request.getParameter("firstName");
@@ -21,7 +19,6 @@ public class RegisterCommand implements CommandInfo {
         String phone = request.getParameter("phone");
         String password = request.getParameter("password");
         boolean admin = Boolean.parseBoolean(request.getParameter("admin"));
-        System.out.println(admin);
         Employee employee = Employee.builder()
                 .firstName(firstName)
                 .lastName(lastName)
@@ -33,18 +30,16 @@ public class RegisterCommand implements CommandInfo {
         MyDAOFactory myDAOFactory = FactoryDAO.getFactory();
         EmployeeDao employeeDao = myDAOFactory.getEmployeeDao();
         Set<Employee> employees = employeeDao.getAll();
+        String page;
         if (!employees.contains(employee)) {
             employeeDao.add(employee);
-            flag = true;
-        }
-        System.out.println(flag);
-        if (!flag) {
-            request.setAttribute("notAdd", "This employee exists");
-        } else {
             HttpSession session = request.getSession();
             session.setAttribute("employee", employee);
+            page = "controller?action=main";
+        } else {
+            request.setAttribute("notAdd", "This employee exists");
+            page = "register.jsp";
         }
-        String result = (!flag) ? "register.jsp" : "controller?action=main";
-        return result;
+        return page;
     }
 }

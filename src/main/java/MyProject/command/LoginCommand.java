@@ -18,11 +18,10 @@ public class LoginCommand implements CommandInfo {
         EmployeeDao employeeDao = factory.getEmployeeDao();
         Optional<Employee> optional = employeeDao.getByLogin(name, password);
         if (optional.isEmpty()) {
-            request.setAttribute("notExists", "This user not exists");
+            request.setAttribute("notExists", "This user not A exists");
         } else {
             request.getSession().setAttribute("employee", optional.get());
         }
-        String resultPage = (optional.isEmpty()) ? "login.jsp" : "controller?action=main";
-        return resultPage;
+        return (optional.isEmpty()) ? "login.jsp" : "controller?action=main";
     }
 }

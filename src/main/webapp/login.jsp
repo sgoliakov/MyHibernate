@@ -6,7 +6,7 @@
 </head>
 <body>
 <с:if test="${not empty requestScope.notExists}">
-    <p>This user not exists</p>
+    <p>This user not Exists</p>
 </с:if>
 <form method="post" action="controller?action=login">
     <p>Name:<input type="text" name="firstName" size="10"/></p>
