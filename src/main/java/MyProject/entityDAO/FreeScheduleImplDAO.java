@@ -10,11 +10,7 @@ import MyProject.entity.WorkingShift;
 import MyProject.hibernateSolutions.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.query.Query;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -29,12 +25,9 @@ public class FreeScheduleImplDAO implements FreeScheduleDao {
     @Override
     public List<FreeSchedule> getAll() {
         Session session = sessionFactory.openSession();
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<FreeSchedule> criteriaQuery = criteriaBuilder.createQuery(FreeSchedule.class);
-        Root<FreeSchedule> root = criteriaQuery.from(FreeSchedule.class);
-        criteriaQuery.select(root);
-        Query<FreeSchedule> query = session.createQuery(criteriaQuery);
-        List<FreeSchedule> freeSchedules = query.getResultList();
+        List<FreeSchedule> freeSchedules = session.createQuery(
+                        "select f from FreeSchedule f", FreeSchedule.class)
+                .getResultList();
         session.close();
         return freeSchedules;
     }

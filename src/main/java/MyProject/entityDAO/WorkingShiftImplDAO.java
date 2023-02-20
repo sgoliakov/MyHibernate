@@ -24,7 +24,7 @@ public class WorkingShiftImplDAO implements WorkingShiftDao {
     public WorkingShiftImplDAO() {
         sessionFactory = HibernateUtil.getFactory();
     }
-
+//нету
     @Override
     public Optional<WorkingShift> getById(int id) {
         Session session = sessionFactory.openSession();
@@ -45,7 +45,7 @@ public class WorkingShiftImplDAO implements WorkingShiftDao {
         session.close();
         return shifts;
     }
-
+//нету
     @Override
     public void add(WorkingShift shift) {
         Session session = sessionFactory.openSession();
@@ -54,7 +54,7 @@ public class WorkingShiftImplDAO implements WorkingShiftDao {
         session.getTransaction().commit();
         session.close();
     }
-
+//нуту
     @Override
     public void update(int id, LocalTime[] params) {
         Session session = sessionFactory.openSession();
@@ -66,12 +66,12 @@ public class WorkingShiftImplDAO implements WorkingShiftDao {
         session.getTransaction().commit();
         session.close();
     }
-
+//нету
     @Override
     public void deleteByID(int id) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        WorkingShift shift = session.find(WorkingShift.class, id);
+        WorkingShift shift = session.get(WorkingShift.class, id);
         session.delete(shift);
         session.getTransaction().commit();
         session.close();

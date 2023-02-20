@@ -6,8 +6,8 @@ from employee;
 
 ALTER TABLE employee
     AUTO_INCREMENT = 0;
-insert employee (nickName, lastName, mail, phone)
-values ('Bob', 'Petrov', '@mail', '050***');
+insert employee (nickName, lastName, mail, phone,isAdmin)
+values ('Bob', 'Petrov', '@mail', '050***',true);
 update employee
 set nickName = 'Rob',
     lastName  = 'Kotov',

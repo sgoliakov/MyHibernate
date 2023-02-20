@@ -2,7 +2,7 @@ package MyProject.servlets;
 
 import MyProject.Intefaces.intefacesCommand.CommandFactoryInfo;
 import MyProject.Intefaces.intefacesCommand.CommandInfo;
-import MyProject.factory.CommandFactory;
+import MyProject.factory.CommandFactoryImpl;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -22,7 +22,7 @@ public class Controller extends HttpServlet {
     }
 
     private void proccessRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        CommandFactoryInfo factory = CommandFactory.getCommandFactory();
+        CommandFactoryInfo factory = CommandFactoryImpl.getCommandFactory();
         CommandInfo command = factory.getCommandInfo(request);
         String page = command.execute(request);
         RequestDispatcher dispatcher = request.getRequestDispatcher(page);

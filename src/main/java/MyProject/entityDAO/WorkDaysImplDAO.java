@@ -8,7 +8,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.time.LocalDate;
@@ -34,7 +33,7 @@ public class WorkDaysImplDAO implements WorkDaysDao {
         session.close();
         return daysList;
     }
-
+//нету
     @Override
     public void add(WorkDays day) {
         Session session = sessionFactory.openSession();
@@ -43,7 +42,7 @@ public class WorkDaysImplDAO implements WorkDaysDao {
         session.getTransaction().commit();
         session.close();
     }
-
+//нуту
     @Override
     public Optional<WorkDays> getById(int id) {
         Session session = sessionFactory.openSession();
@@ -51,7 +50,7 @@ public class WorkDaysImplDAO implements WorkDaysDao {
         session.close();
         return Optional.ofNullable(day);
     }
-
+//нету
     @Override
     public void delete(int id) {
         Session session = sessionFactory.openSession();
@@ -82,19 +81,6 @@ public class WorkDaysImplDAO implements WorkDaysDao {
             day.setDay(date.plusDays(i));
             session.save(day);
         }
-        session.getTransaction().commit();
-        session.close();
-    }
-
-    @Override
-    public void deleteByDate(LocalDate date) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaDelete<WorkDays> criteriaDelete = builder.createCriteriaDelete(WorkDays.class);
-        Root<WorkDays> root = criteriaDelete.from(WorkDays.class);
-        criteriaDelete.where(builder.equal(root.get("day"), date));
-        session.createQuery(criteriaDelete).executeUpdate();
         session.getTransaction().commit();
         session.close();
     }

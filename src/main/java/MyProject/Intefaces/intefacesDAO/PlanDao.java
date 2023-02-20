@@ -12,7 +12,5 @@ public interface PlanDao {
 
     void deleteAll();
 
-    void createPlan(WorkDaysDao workDaysDao,WorkingShiftDao workingShiftDao);
-
-    void removeByID(int id);
+    void createPlan(WorkDaysDao workDaysDao, WorkingShiftDao workingShiftDao);
 }

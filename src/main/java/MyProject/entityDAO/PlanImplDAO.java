@@ -47,16 +47,6 @@ public class PlanImplDAO implements PlanDao {
     }
 
     @Override
-    public void removeByID(int id) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        Plan day = session.get(Plan.class, id);
-        session.delete(day);
-        session.getTransaction().commit();
-        session.close();
-    }
-
-    @Override
     public void deleteAll() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();

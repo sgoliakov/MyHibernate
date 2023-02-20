@@ -9,7 +9,6 @@ import org.hibernate.query.Query;
 
 import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.HashSet;
@@ -53,6 +52,7 @@ public class EmployeeImplDAO implements EmployeeDao {
         session.close();
     }
 
+    //нету, надо(editor)
     @Override
     public void updateByID(int id, String[] params) {
         Session session = sessionFactory.openSession();
@@ -73,21 +73,6 @@ public class EmployeeImplDAO implements EmployeeDao {
         session.beginTransaction();
         Employee empDelete = session.get(Employee.class, id);
         session.delete(empDelete);
-        session.getTransaction().commit();
-        session.close();
-    }
-
-    @Override
-    public void deleteByName(String nickName, String lastName) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaDelete<Employee> criteriaDelete = builder.createCriteriaDelete(Employee.class);
-        Root<Employee> root = criteriaDelete.from(Employee.class);
-        criteriaDelete.where(builder.and
-                (builder.equal(root.get("nickName"), nickName),
-                        builder.equal(root.get("lastName"), lastName)));
-        session.createQuery(criteriaDelete).executeUpdate();
         session.getTransaction().commit();
         session.close();
     }

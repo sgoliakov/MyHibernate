@@ -8,11 +8,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CommandFactory implements CommandFactoryInfo {
+public class CommandFactoryImpl implements CommandFactoryInfo {
     private static CommandFactoryInfo factory;
     private final Map<String, CommandInfo> comands = new HashMap<>();
 
-    private CommandFactory() {
+    private CommandFactoryImpl() {
         comands.put("register", new RegisterCommand());
         comands.put("logout", new LogoutCommand());
         comands.put("main", new CommandMain());
@@ -31,7 +31,7 @@ public class CommandFactory implements CommandFactoryInfo {
 
     public static synchronized CommandFactoryInfo getCommandFactory() {
         if (factory == null) {
-            factory = new CommandFactory();
+            factory = new CommandFactoryImpl();
         }
         return factory;
     }

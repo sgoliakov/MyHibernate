@@ -18,6 +18,4 @@ public interface WorkDaysDao {
     void deleteAll();
 
     void createFromDate(LocalDate date);
-
-    void deleteByDate(LocalDate date);
 }
