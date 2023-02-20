@@ -1,6 +1,6 @@
 package MyProject.entity;
 
-import MyProject.entityHelper.FK.EmpDayFK;
+import MyProject.entityDAO.FK.EmpDayFK;
 import lombok.*;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;

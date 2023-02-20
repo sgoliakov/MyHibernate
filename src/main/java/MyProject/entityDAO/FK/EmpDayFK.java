@@ -1,4 +1,4 @@
-package MyProject.entityHelper.FK;
+package MyProject.entityDAO.FK;
 
 import MyProject.entity.Employee;
 import MyProject.entity.WorkDays;
@@ -9,7 +9,6 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.Embeddable;
-import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import java.io.Serializable;
@@ -20,7 +19,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
 @DynamicUpdate
 @DynamicInsert
 @Embeddable

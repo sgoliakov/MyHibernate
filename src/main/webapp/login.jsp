@@ -1,16 +1,20 @@
 <%@ taglib prefix="с" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Login</title>
 </head>
 <body>
-<с:if test="${not empty requestScope.notExists}">
-    <p>This user not Exists</p>
+<с:if test="${not empty requestScope.notUser}"><%--@elvariable id="notUser" type="String"--%>
+    <p style="color:red;">${notUser}</p>
 </с:if>
 <form method="post" action="controller?action=login">
-    <p>Name:<input type="text" name="firstName" size="10"/></p>
-    <p>Password:<input type="password" name="password" size="10"/></p>
+    <p>Name:<label>
+        <input type="text" name="nickName" size="10"/>
+    </label></p>
+    <p>Password:<label>
+        <input type="password" name="password" size="10"/>
+    </label></p>
     <p><input type="submit" value="Login"/></p>
 </form>
 <form method="post" action="register.jsp">

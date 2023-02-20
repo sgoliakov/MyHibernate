@@ -8,7 +8,7 @@ import MyProject.entity.Employee;
 import MyProject.entity.FreeSchedule;
 import MyProject.entity.Schedule;
 import MyProject.entity.WorkDays;
-import MyProject.factory.FactoryDAO;
+import MyProject.factory.MyDAOFactoryImpl;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.List;
 public class CommandMain implements CommandInfo {
     @Override
     public String execute(HttpServletRequest request) {
-        MyDAOFactory myDAOFactory = FactoryDAO.getFactory();
+        MyDAOFactory myDAOFactory = MyDAOFactoryImpl.getFactory();
         Employee employee = (Employee) request.getSession().getAttribute("employee");
         if (employee != null) {
             List<FreeSchedule> allFreeSchedules = myDAOFactory.getFreeScheduleDao().getAll();

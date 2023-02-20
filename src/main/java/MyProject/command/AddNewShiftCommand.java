@@ -5,7 +5,7 @@ import MyProject.Intefaces.intefacesDAO.FreeScheduleDao;
 import MyProject.Intefaces.intefacesDAO.MyDAOFactory;
 import MyProject.Intefaces.intefacesDAO.PlanDao;
 import MyProject.entity.Plan;
-import MyProject.factory.FactoryDAO;
+import MyProject.factory.MyDAOFactoryImpl;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Optional;
@@ -13,7 +13,7 @@ import java.util.Optional;
 public class AddNewShiftCommand implements CommandInfo {
     @Override
     public String execute(HttpServletRequest request) {
-        MyDAOFactory factory = FactoryDAO.getFactory();
+        MyDAOFactory factory = MyDAOFactoryImpl.getFactory();
         FreeScheduleDao freeScheduleDao = factory.getFreeScheduleDao();
         PlanDao planDao = factory.getPlanDao();
         int id = Integer.parseInt(request.getParameter("id"));

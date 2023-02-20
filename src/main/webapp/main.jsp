@@ -1,6 +1,5 @@
-<%@ page import="java.util.Date" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Main</title>
@@ -8,7 +7,7 @@
 <body>
 <c:choose>
     <c:when test="${not empty sessionScope.employee}">
-        <p>Hello :${sessionScope.employee.firstName}</p>
+        <p>Hello :${sessionScope.employee.nickName}</p>
         <p><a href="controller?action=schedule_by_id">My schedule</a></p>
         <p><a href="controller?action=free_schedule_shifts">Add shift into Schedule</a></p>
         <p><a href="controller?action=free_schedule_shifts">Show free Shift</a></p>
@@ -35,6 +34,7 @@
     <c:otherwise>
         <c:choose>
             <c:when test="${sessionScope.employee.admin == false}">
+                <%--@elvariable id="freeSchedules" type="java.util.List"--%>
                 <c:forEach items="${freeSchedules}" var="shift">
                     <form method="post" action="controller?action=add_shift_into_my_schedule">
                         <input type="hidden" name="id" value="${shift.id}"/>

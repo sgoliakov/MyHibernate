@@ -5,7 +5,7 @@ import MyProject.Intefaces.intefacesDAO.*;
 import MyProject.entity.FreeSchedule;
 import MyProject.entity.Schedule;
 import MyProject.entity.WorkDays;
-import MyProject.factory.FactoryDAO;
+import MyProject.factory.MyDAOFactoryImpl;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.time.LocalDate;
@@ -14,7 +14,7 @@ import java.util.List;
 public class ReportCommand implements CommandInfo {
     @Override
     public String execute(HttpServletRequest request) {
-        MyDAOFactory factory = FactoryDAO.getFactory();
+        MyDAOFactory factory = MyDAOFactoryImpl.getFactory();
         EmployeeDao employeeDao = factory.getEmployeeDao();
         Long amountEmp = employeeDao.amountEmp();
         ScheduleDao scheduleDao = factory.getScheduleDao();

@@ -16,4 +16,8 @@ public interface WorkingShiftDao {
     void update(int id, LocalTime[] params);
 
     void deleteByID(int id);
+
+    void createAll();
+
+    void deleteAll();
 }

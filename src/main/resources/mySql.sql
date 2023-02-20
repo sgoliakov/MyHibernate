@@ -6,10 +6,10 @@ from employee;
 
 ALTER TABLE employee
     AUTO_INCREMENT = 0;
-insert employee (firstName, lastName, mail, phone)
+insert employee (nickName, lastName, mail, phone)
 values ('Bob', 'Petrov', '@mail', '050***');
 update employee
-set firstName = 'Rob',
+set nickName = 'Rob',
     lastName  = 'Kotov',
     mail      = '@mail',
     phone='0670***'
@@ -39,12 +39,12 @@ update workingshift
 set end = '15:45'
 where id = 1;
 
-select firstName, lastName, mail, phone, work_day_id, shift_id
+select nickName, lastName, mail, phone, work_day_id, shift_id
 from employee
          join schedule on employee_id = employee.id
 order by work_day_id;
 
-select day, firstName, lastName, mail, phone, start, end
+select day, nickName, lastName, mail, phone, start, end
 from employee
          join schedule on employee_id = employee.id
          join workdays on workdays.id = schedule.work_day_id

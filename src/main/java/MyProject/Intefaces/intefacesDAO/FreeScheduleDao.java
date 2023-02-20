@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface FreeScheduleDao {
     List<FreeSchedule> getAll();
 
-    void createAll();
+    void createAll(WorkDaysDao workDaysDao, WorkingShiftDao workingShiftDao);
 
     void addFree(Plan p);
 

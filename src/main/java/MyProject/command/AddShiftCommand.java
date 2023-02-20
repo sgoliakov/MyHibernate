@@ -6,8 +6,8 @@ import MyProject.Intefaces.intefacesDAO.MyDAOFactory;
 import MyProject.entity.Employee;
 import MyProject.entity.FreeSchedule;
 import MyProject.entity.Schedule;
-import MyProject.entityHelper.FK.EmpDayFK;
-import MyProject.factory.FactoryDAO;
+import MyProject.entityDAO.FK.EmpDayFK;
+import MyProject.factory.MyDAOFactoryImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -17,7 +17,7 @@ public class AddShiftCommand implements CommandInfo {
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        MyDAOFactory factory = FactoryDAO.getFactory();
+        MyDAOFactory factory = MyDAOFactoryImpl.getFactory();
         FreeScheduleDao freeScheduleDao = factory.getFreeScheduleDao();
         Employee employee = (Employee) session.getAttribute("employee");
         int id = Integer.parseInt(request.getParameter("id"));

@@ -12,7 +12,7 @@ public interface PlanDao {
 
     void deleteAll();
 
-    void createPlan();
+    void createPlan(WorkDaysDao workDaysDao,WorkingShiftDao workingShiftDao);
 
     void removeByID(int id);
 }

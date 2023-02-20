@@ -16,7 +16,7 @@ public interface EmployeeDao {
 
     void deleteByID(int id);
 
-    void deleteByName(String firstName, String lastName);
+    void deleteByName(String nickName, String lastName);
 
     Long amountEmp();
 

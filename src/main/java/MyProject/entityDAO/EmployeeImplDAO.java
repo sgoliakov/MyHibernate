@@ -1,22 +1,25 @@
-package MyProject.entityHelper;
+package MyProject.entityDAO;
 
 import MyProject.Intefaces.intefacesDAO.EmployeeDao;
 import MyProject.entity.Employee;
 import MyProject.hibernateSolutions.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 
 import javax.persistence.NoResultException;
-import javax.persistence.Query;
-import javax.persistence.criteria.*;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaDelete;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-public class EmployeeHelper implements EmployeeDao {
+public class EmployeeImplDAO implements EmployeeDao {
     private static SessionFactory sessionFactory;
 
-    public EmployeeHelper() {
+    public EmployeeImplDAO() {
         sessionFactory = HibernateUtil.getFactory();
     }
 
@@ -32,11 +35,11 @@ public class EmployeeHelper implements EmployeeDao {
     public Set<Employee> getAll() {
         Session session = sessionFactory.openSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(Employee.class);
+        CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
         Root<Employee> root = criteriaQuery.from(Employee.class);
         criteriaQuery.select(root);
-        Query query = session.createQuery(criteriaQuery);//сам запрос
-        Set<Employee> employees = new HashSet(query.getResultList());
+        Query<Employee> query = session.createQuery(criteriaQuery);
+        Set<Employee> employees = new HashSet<>(query.getResultList());
         session.close();
         return employees;
     }
@@ -55,7 +58,7 @@ public class EmployeeHelper implements EmployeeDao {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         Employee employeeUpdate = session.get(Employee.class, id);
-        employeeUpdate.setFirstName(params[0]);
+        employeeUpdate.setNickName(params[0]);
         employeeUpdate.setLastName(params[1]);
         employeeUpdate.setMail(params[2]);
         employeeUpdate.setPhone(params[3]);
@@ -68,24 +71,23 @@ public class EmployeeHelper implements EmployeeDao {
     public void deleteByID(int id) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        Employee empDelete = session.find(Employee.class, id);
+        Employee empDelete = session.get(Employee.class, id);
         session.delete(empDelete);
         session.getTransaction().commit();
         session.close();
     }
 
     @Override
-    public void deleteByName(String firstName, String lastName) {
+    public void deleteByName(String nickName, String lastName) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaDelete criteriaDelete = builder.createCriteriaDelete(Employee.class);
+        CriteriaDelete<Employee> criteriaDelete = builder.createCriteriaDelete(Employee.class);
         Root<Employee> root = criteriaDelete.from(Employee.class);
         criteriaDelete.where(builder.and
-                (builder.equal(root.get("firstName"), firstName),
+                (builder.equal(root.get("nickName"), nickName),
                         builder.equal(root.get("lastName"), lastName)));
-        Query query = session.createQuery(criteriaDelete);
-        query.executeUpdate();
+        session.createQuery(criteriaDelete).executeUpdate();
         session.getTransaction().commit();
         session.close();
     }
@@ -97,12 +99,12 @@ public class EmployeeHelper implements EmployeeDao {
         CriteriaQuery<Employee> criteriaQuery = builder.createQuery(Employee.class);
         Root<Employee> root = criteriaQuery.from(Employee.class);
         criteriaQuery.where(builder.and
-                (builder.equal(root.get("firstName"), name),
+                (builder.equal(root.get("nickName"), name),
                         builder.equal(root.get("password"), password)));
-        Query query = session.createQuery(criteriaQuery);
+        Query<Employee> query = session.createQuery(criteriaQuery);
         Employee employee = null;
         try {
-            employee = (Employee) query.getSingleResult();
+            employee = query.getSingleResult();
         } catch (NoResultException e) {
             System.out.println("employee not found");
         } finally {
@@ -115,8 +117,6 @@ public class EmployeeHelper implements EmployeeDao {
     public Long amountEmp() {
         Session session = sessionFactory.openSession();
         String hqlQuery = "select count(*) from Employee";
-        Query query = session.createQuery(hqlQuery);
-        Long count = (Long) query.getSingleResult();
-        return count;
+        return (Long) session.createQuery(hqlQuery).getSingleResult();
     }
 }

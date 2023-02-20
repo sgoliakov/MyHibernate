@@ -1,12 +1,12 @@
-package MyProject.entityHelper;
+package MyProject.entityDAO;
 
 import MyProject.Intefaces.intefacesDAO.WorkDaysDao;
 import MyProject.entity.WorkDays;
 import MyProject.hibernateSolutions.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.Query;
 
-import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaDelete;
 import javax.persistence.criteria.CriteriaQuery;
@@ -15,10 +15,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-public class WorkDaysHelper implements WorkDaysDao {
+public class WorkDaysImplDAO implements WorkDaysDao {
     private static SessionFactory sessionFactory;
 
-    public WorkDaysHelper() {
+    public WorkDaysImplDAO() {
         sessionFactory = HibernateUtil.getFactory();
     }
 
@@ -26,10 +26,10 @@ public class WorkDaysHelper implements WorkDaysDao {
     public List<WorkDays> getAll() {
         Session session = sessionFactory.openSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(WorkDays.class);
+        CriteriaQuery<WorkDays> criteriaQuery = criteriaBuilder.createQuery(WorkDays.class);
         Root<WorkDays> root = criteriaQuery.from(WorkDays.class);
         criteriaQuery.select(root);
-        Query query = session.createQuery(criteriaQuery);
+        Query<WorkDays> query = session.createQuery(criteriaQuery);
         List<WorkDays> daysList = query.getResultList();
         session.close();
         return daysList;
@@ -56,7 +56,7 @@ public class WorkDaysHelper implements WorkDaysDao {
     public void delete(int id) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        WorkDays day = session.find(WorkDays.class, id);
+        WorkDays day = session.get(WorkDays.class, id);
         session.delete(day);
         session.getTransaction().commit();
         session.close();
@@ -66,11 +66,8 @@ public class WorkDaysHelper implements WorkDaysDao {
     public void deleteAll() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        List<WorkDays> daysList = getAll();
-        for (int i = 0; i < daysList.size(); i++) {
-            WorkDays d = session.find(WorkDays.class, daysList.get(i).getId());
-            session.delete(d);
-        }
+        String hql = "DELETE FROM WorkDays ";
+        session.createQuery(hql).executeUpdate();
         session.getTransaction().commit();
         session.close();
     }
@@ -79,7 +76,6 @@ public class WorkDaysHelper implements WorkDaysDao {
     public void createFromDate(LocalDate date) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        deleteAll();
         session.createSQLQuery("ALTER TABLE workdays AUTO_INCREMENT=0").executeUpdate();
         for (int i = 0; i < 30; i++) {
             WorkDays day = new WorkDays();
@@ -95,11 +91,10 @@ public class WorkDaysHelper implements WorkDaysDao {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaDelete criteriaDelete = builder.createCriteriaDelete(WorkDays.class);
+        CriteriaDelete<WorkDays> criteriaDelete = builder.createCriteriaDelete(WorkDays.class);
         Root<WorkDays> root = criteriaDelete.from(WorkDays.class);
         criteriaDelete.where(builder.equal(root.get("day"), date));
-        Query query = session.createQuery(criteriaDelete);
-        query.executeUpdate();
+        session.createQuery(criteriaDelete).executeUpdate();
         session.getTransaction().commit();
         session.close();
     }

@@ -8,7 +8,7 @@ import MyProject.commandHelper.MySortedFreeSchedule;
 import MyProject.entity.Employee;
 import MyProject.entity.FreeSchedule;
 import MyProject.entity.Schedule;
-import MyProject.factory.FactoryDAO;
+import MyProject.factory.MyDAOFactoryImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -19,7 +19,7 @@ public class FreeScheduleShiftsCommand implements CommandInfo {
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
-        MyDAOFactory factory = FactoryDAO.getFactory();
+        MyDAOFactory factory = MyDAOFactoryImpl.getFactory();
         ScheduleDao scheduleDao = factory.getScheduleDao();
         FreeScheduleDao freeScheduleDao = factory.getFreeScheduleDao();
         Employee employee = (Employee) session.getAttribute("employee");

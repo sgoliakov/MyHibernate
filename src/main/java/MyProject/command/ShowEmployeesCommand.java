@@ -4,7 +4,7 @@ import MyProject.Intefaces.intefacesCommand.CommandInfo;
 import MyProject.Intefaces.intefacesDAO.EmployeeDao;
 import MyProject.Intefaces.intefacesDAO.MyDAOFactory;
 import MyProject.entity.Employee;
-import MyProject.factory.FactoryDAO;
+import MyProject.factory.MyDAOFactoryImpl;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Set;
@@ -12,7 +12,7 @@ import java.util.Set;
 public class ShowEmployeesCommand implements CommandInfo {
     @Override
     public String execute(HttpServletRequest request) {
-        MyDAOFactory factory = FactoryDAO.getFactory();
+        MyDAOFactory factory = MyDAOFactoryImpl.getFactory();
         EmployeeDao employeeDao = factory.getEmployeeDao();
         Set<Employee> employees = employeeDao.getAll();
         if (employees.isEmpty()) {

@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Employees</title>
@@ -9,9 +9,10 @@
     <input type="submit" value="Go to main"/>
 </form>
 <c:if test="${not empty requestScope.delete}">
-    <p>"${requestScope.delete}"</p>
+    <p style="color: blue">"${requestScope.delete}"</p>
 </c:if>
 <c:choose>
+    <%--@elvariable id="employees" type="java.util.List"--%>
     <c:when test="${not empty employees}">
         <table cellpadding="1" cellspacing="1" border="1">
             <tr>
@@ -25,7 +26,7 @@
                 <tr>
                     <c:choose>
                         <c:when test="${employee.admin == false}">
-                            <td>${employee.firstName}</td>
+                            <td>${employee.nickName}</td>
                             <td>${employee.lastName}</td>
                             <td>${employee.mail}</td>
                             <td>${employee.phone}</td>
@@ -37,7 +38,7 @@
                             </td>
                         </c:when>
                         <c:otherwise>
-                            <td colspan="4" align="center">Admin</td>
+                            <td colspan="4" style="text-align: center">Admin</td>
                         </c:otherwise>
                     </c:choose>
                 </tr>
@@ -46,7 +47,7 @@
     </c:when>
     <c:otherwise>
         <c:if test="${not empty requestScope.notFound}">
-            <p>"${requestScope.notFound}"</p>
+            <p style="color: red">"${requestScope.notFound}"</p>
         </c:if>
     </c:otherwise>
 </c:choose>

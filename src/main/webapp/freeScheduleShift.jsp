@@ -1,5 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
     <title>Free shift</title>
@@ -10,6 +10,7 @@
 </form>
 <c:choose>
     <c:when test="${sessionScope.employee.admin == false}">
+        <%--@elvariable id="freeSchedule" type="java.util.List"--%>
         <c:forEach items="${freeSchedule}" var="shift">
             <form method="post" action="controller?action=add_shift_into_my_schedule">
                 <input type="hidden" name="id" value="${shift.id}"/>
@@ -19,13 +20,14 @@
     </c:when>
     <c:otherwise>
         <c:if test="${not empty requestScope.Remove}">
-            <p>"${requestScope.Remove}"</p>
+            <p style="color: blue">"${requestScope.Remove}"</p>
         </c:if>
+        <%--@elvariable id="freeSchedule" type="java.util.List"--%>
         <c:forEach items="${freeSchedule}" var="shift">
             <form method="post" action="controller?action=remove_shift">
                 <p>${shift.day} : ${shift.shift}</p>
                 <input type="hidden" name="id" value="${shift.id}"/>
-                <input type="submit" value="Delete"/></p>
+                <input type="submit" value="Delete"/>
             </form>
         </c:forEach>
     </c:otherwise>

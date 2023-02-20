@@ -5,7 +5,7 @@ import MyProject.Intefaces.intefacesDAO.MyDAOFactory;
 import MyProject.Intefaces.intefacesDAO.ScheduleDao;
 import MyProject.entity.Employee;
 import MyProject.entity.Schedule;
-import MyProject.factory.FactoryDAO;
+import MyProject.factory.MyDAOFactoryImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
@@ -16,7 +16,7 @@ public class ShowMyScheduleCommand implements CommandInfo {
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
         Employee employee = (Employee) session.getAttribute("employee");
-        MyDAOFactory factory = FactoryDAO.getFactory();
+        MyDAOFactory factory = MyDAOFactoryImpl.getFactory();
         ScheduleDao scheduleDao = factory.getScheduleDao();
         List<Schedule> byId = scheduleDao.getById(employee.getId());
         if (byId.isEmpty()) {

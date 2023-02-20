@@ -1,11 +1,10 @@
-package MyProject.entityHelper;
+package MyProject.entityDAO;
 
 import MyProject.Intefaces.intefacesDAO.ScheduleDao;
 import MyProject.entity.Employee;
 import MyProject.entity.Schedule;
 import MyProject.entity.WorkDays;
-import MyProject.entity.WorkingShift;
-import MyProject.entityHelper.FK.EmpDayFK;
+import MyProject.entityDAO.FK.EmpDayFK;
 import MyProject.hibernateSolutions.HibernateUtil;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -16,10 +15,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-public class ScheduleHelper implements ScheduleDao {
+public class ScheduleImplDAO implements ScheduleDao {
     private static SessionFactory sessionFactory;
 
-    public ScheduleHelper() {
+    public ScheduleImplDAO() {
         sessionFactory = HibernateUtil.getFactory();
     }
 
@@ -27,11 +26,11 @@ public class ScheduleHelper implements ScheduleDao {
     public List<Schedule> getById(int id) {
         Session session = sessionFactory.openSession();
         CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery criteriaQuery = criteriaBuilder.createQuery(Employee.class);
-        Root<Employee> root = criteriaQuery.from(Schedule.class);
+        CriteriaQuery<Schedule> criteriaQuery = criteriaBuilder.createQuery(Schedule.class);
+        Root<Schedule> root = criteriaQuery.from(Schedule.class);
         criteriaQuery.select(root);
         criteriaQuery.where(criteriaBuilder.equal(root.get("fk").get("employee").get("id"), id));
-        javax.persistence.Query query = session.createQuery(criteriaQuery);
+        Query<Schedule> query = session.createQuery(criteriaQuery);
         List<Schedule> schedules = query.getResultList();
         session.close();
         return schedules;
@@ -42,10 +41,10 @@ public class ScheduleHelper implements ScheduleDao {
         List<Schedule> list = null;
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
-            CriteriaQuery cq = cb.createQuery(Schedule.class);
-            Root<WorkingShift> shiftRoot = cq.from(Schedule.class);
+            CriteriaQuery<Schedule> cq = cb.createQuery(Schedule.class);
+            Root<Schedule> shiftRoot = cq.from(Schedule.class);
             cq.select(shiftRoot);
-            Query query = session.createQuery(cq);
+            Query<Schedule> query = session.createQuery(cq);
             list = query.getResultList();
         } catch (Exception e) {
             e.printStackTrace();
@@ -71,9 +70,9 @@ public class ScheduleHelper implements ScheduleDao {
         fk.setWorkDay(day);
         String hql = "DELETE FROM Schedule " +
                 "WHERE id = :employee_id";
-        Query query = session.createQuery(hql);
-        query.setParameter("employee_id", fk);
-        int result = query.executeUpdate();
+        int result = session.createQuery(hql)
+                .setParameter("employee_id", fk)
+                .executeUpdate();
         session.getTransaction().commit();
         session.close();
         return result;
@@ -84,8 +83,7 @@ public class ScheduleHelper implements ScheduleDao {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         String hql = "DELETE FROM Schedule";
-        Query query = session.createQuery(hql);
-        query.executeUpdate();
+        session.createQuery(hql).executeUpdate();
         session.getTransaction().commit();
         session.close();
     }

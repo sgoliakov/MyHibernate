@@ -1,48 +1,48 @@
 package MyProject.factory;
 
 import MyProject.Intefaces.intefacesDAO.*;
-import MyProject.entityHelper.*;
+import MyProject.entityDAO.*;
 
-public class FactoryDAO implements MyDAOFactory {
+public class MyDAOFactoryImpl implements MyDAOFactory {
     private static MyDAOFactory factory;
 
-    private FactoryDAO() {
+    private MyDAOFactoryImpl() {
     }
 
     public static synchronized MyDAOFactory getFactory() {
         if (factory == null) {
-            factory = new FactoryDAO();
+            factory = new MyDAOFactoryImpl();
         }
         return factory;
     }
 
     @Override
     public EmployeeDao getEmployeeDao() {
-        return new EmployeeHelper();
+        return new EmployeeImplDAO();
     }
 
     @Override
     public WorkDaysDao getWorkDaysDao() {
-        return new WorkDaysHelper();
+        return new WorkDaysImplDAO();
     }
 
     @Override
     public WorkingShiftDao getWorkingShiftDao() {
-        return new WorkingShiftHelper();
+        return new WorkingShiftImplDAO();
     }
 
     @Override
     public ScheduleDao getScheduleDao() {
-        return new ScheduleHelper();
+        return new ScheduleImplDAO();
     }
 
     @Override
     public FreeScheduleDao getFreeScheduleDao() {
-        return new FreeScheduleHelper();
+        return new FreeScheduleImplDAO();
     }
 
     @Override
     public PlanDao getPlanDao() {
-        return new PlanHelper();
+        return new PlanImplDAO();
     }
 }

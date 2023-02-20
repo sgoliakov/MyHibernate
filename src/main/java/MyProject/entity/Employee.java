@@ -21,7 +21,7 @@ public class Employee implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(unique = true)
-    private String firstName;
+    private String nickName;
     private String lastName;
     private String mail;
     private String phone;
@@ -32,7 +32,7 @@ public class Employee implements Serializable {
     public boolean equals(Object o) {
         if (o.getClass() == this.getClass()) {
             Employee emp = (Employee) o;
-            return this.getFirstName().equals(emp.getFirstName());
+            return this.getNickName().equals(emp.getNickName());
         }
         return false;
     }
@@ -40,7 +40,7 @@ public class Employee implements Serializable {
     @Override
     public int hashCode() {
         int result = 31;
-        result = 31 * result + ((getFirstName() != null) ? getFirstName().hashCode() : 0);
+        result = 31 * result + ((getNickName() != null) ? getNickName().hashCode() : 0);
         return result;
     }
 }
