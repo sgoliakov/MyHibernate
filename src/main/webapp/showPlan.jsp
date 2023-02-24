@@ -19,11 +19,7 @@
     <form method="post" action="controller?action=add_new_shift">
         <p>${shift.day} : ${shift.shift}</p>
         <input type="hidden" name="id" value="${shift.id}"/>
-        <input type="submit" value="Add"/>
-    </form>
-    <form method="post" action="controller?action=remove_shift">
-        <input type="hidden" name="id" value="${shift.id}"/>
-        <input type="submit" value="Delete"/>
+        <input type="submit" value="Add into free shift"/>
     </form>
 </c:forEach>
 <form method="post" action="controller?action=main">

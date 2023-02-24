@@ -12,10 +12,11 @@
 <form method="post" action="controller?action=free_schedule_shifts">
     <input type="submit" value="Add shift into Schedule"/>
 </form>
-<с:forEach items="${sessionScope.mySchedule}" var="shift">
-    <p>${shift.fk.workDay} : ${shift.shift}</p>
+<с:forEach items="${sessionScope.myWrapperSchedule}" var="shift">
+    <p>${shift.day} : ${shift.shift}</p>
 </с:forEach>
-<с:if test="${not empty requestScope.notExists}"><%--@elvariable id="notExists" type="String"--%>
+<%--@elvariable id="notExists" type="String"--%>
+<с:if test="${not empty requestScope.notExists}">
     <p style="color: red">${notExists}</p>
 </с:if>
 <form method="post" action="controller?action=main">

@@ -23,6 +23,6 @@ public class AddNewShiftCommand implements CommandInfo {
             freeScheduleDao.addFree(plan);
             request.setAttribute("Add", "added");
         } else request.setAttribute("notAdd", "unsuccessful");
-        return "adminCabinet.jsp";
+        return "showPlan.jsp";
     }
 }

@@ -3,8 +3,10 @@ package MyProject.entityDAO;
 import MyProject.Intefaces.intefacesDAO.EmployeeDao;
 import MyProject.entity.Employee;
 import MyProject.hibernateSolutions.HibernateUtil;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import javax.persistence.NoResultException;
@@ -45,14 +47,17 @@ public class EmployeeImplDAO implements EmployeeDao {
 
     @Override
     public void add(Employee emp) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.save(emp);
-        session.getTransaction().commit();
-        session.close();
+        Transaction txn = null;
+        try (Session session = sessionFactory.openSession()) {
+            txn = session.beginTransaction();
+            session.save(emp);
+            txn.commit();
+        } catch (HibernateException e) {
+            if (txn != null) txn.rollback();
+            e.printStackTrace();
+        }
     }
 
-    //нету, надо(editor)
     @Override
     public void updateByID(int id, String[] params) {
         Session session = sessionFactory.openSession();
@@ -62,6 +67,7 @@ public class EmployeeImplDAO implements EmployeeDao {
         employeeUpdate.setLastName(params[1]);
         employeeUpdate.setMail(params[2]);
         employeeUpdate.setPhone(params[3]);
+        employeeUpdate.setPassword(params[4]);
         session.update(employeeUpdate);
         session.getTransaction().commit();
         session.close();

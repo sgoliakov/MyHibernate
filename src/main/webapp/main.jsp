@@ -7,10 +7,10 @@
 <body>
 <c:choose>
     <c:when test="${not empty sessionScope.employee}">
-        <p>Hello :${sessionScope.employee.nickName}</p>
+        <p>Hello : ${sessionScope.employee.nickName}</p>
         <p><a href="controller?action=schedule_by_id">My schedule</a></p>
-        <p><a href="controller?action=free_schedule_shifts">Add shift into Schedule</a></p>
         <p><a href="controller?action=free_schedule_shifts">Show free Shift</a></p>
+        <p><a href="controller?action=edit">Edit my Profile</a></p>
         <p><a href="controller?action=logout">Logout</a></p>
     </c:when>
     <c:otherwise>
@@ -44,7 +44,7 @@
             </c:when>
             <c:otherwise>
                 <p><a href="controller?action=show_plan">Add new shift</a></p>
-                <p><a href="controller?action=free_schedule_shifts">Remove shift</a></p>
+                <p><a href="controller?action=free_schedule_shifts">Remove available shift</a></p>
                 <p><a href="controller?action=show_employees">Show employees</a></p>
                 <p><a href="controller?action=create_month_plan">Create new Month Plan</a></p>
                 <p><a href="controller?action=create_report">Create report</a></p>

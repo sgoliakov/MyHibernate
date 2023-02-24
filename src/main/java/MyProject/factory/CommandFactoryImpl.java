@@ -17,8 +17,12 @@ public class CommandFactoryImpl implements CommandFactoryInfo {
         comands.put("logout", new LogoutCommand());
         comands.put("main", new CommandMain());
         comands.put("login", new LoginCommand());
+        comands.put("edit", new EditProfileCommand());
+        comands.put("update", new UpdateProfileCommand());
         comands.put("add_shift_into_my_schedule", new AddShiftCommand());
         comands.put("schedule_by_id", new ShowMyScheduleCommand());
+        comands.put("edit_schedule", new EditScheduleEmployee());
+        comands.put("delete_schedule_employee", new DeleteScheduleEmployee());
         comands.put("free_schedule_shifts", new FreeScheduleShiftsCommand());
         comands.put("show_plan", new ShowPlanCommand());
         comands.put("show_employees", new ShowEmployeesCommand());

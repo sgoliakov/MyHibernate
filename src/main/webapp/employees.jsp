@@ -35,6 +35,10 @@
                                     <input type="hidden" name="id" value="${employee.id}"/>
                                     <p><input type="submit" value="Delete employee"/></p>
                                 </form>
+                                <form method="post" action="controller?action=edit_schedule">
+                                    <input type="hidden" name="id" value="${employee.id}"/>
+                                    <p><input type="submit" value="Edit schedule"/></p>
+                                </form>
                             </td>
                         </c:when>
                         <c:otherwise>

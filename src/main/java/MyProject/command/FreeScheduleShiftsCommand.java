@@ -7,12 +7,13 @@ import MyProject.Intefaces.intefacesDAO.ScheduleDao;
 import MyProject.commandHelper.MySortedFreeSchedule;
 import MyProject.entity.Employee;
 import MyProject.entity.FreeSchedule;
-import MyProject.entity.Schedule;
+import MyProject.entity.wrapperEntity.WrapperSchedule;
 import MyProject.factory.MyDAOFactoryImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 
 public class FreeScheduleShiftsCommand implements CommandInfo {
@@ -27,10 +28,11 @@ public class FreeScheduleShiftsCommand implements CommandInfo {
             List<FreeSchedule> freeSchedules = freeScheduleDao.getAll();
             List<FreeSchedule> list = freeSchedules.stream()
                     .filter(s -> s.getDay().getDay().isAfter(LocalDate.now()))
+                    .sorted(Comparator.comparing(s -> s.getDay().getDay()))
                     .toList();
             request.setAttribute("freeSchedule", list);
         } else {
-            List<Schedule> mySchedule = scheduleDao.getById(employee.getId());
+            List<WrapperSchedule> mySchedule = scheduleDao.getWrapperScheduleById(employee.getId());
             List<FreeSchedule> freeSchedules = freeScheduleDao.getAll();
             List<FreeSchedule> list = MySortedFreeSchedule.getAvailableFreeSchedule(mySchedule, freeSchedules);
             request.setAttribute("freeSchedule", list);

@@ -7,23 +7,24 @@ import MyProject.entity.Employee;
 import MyProject.entity.wrapperEntity.WrapperSchedule;
 import MyProject.factory.MyDAOFactoryImpl;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 
 import java.util.List;
+import java.util.Optional;
 
-public class ShowMyScheduleCommand implements CommandInfo {
+public class EditScheduleEmployee implements CommandInfo {
     @Override
     public String execute(HttpServletRequest request) {
-        HttpSession session = request.getSession();
-        Employee employee = (Employee) session.getAttribute("employee");
         MyDAOFactory factory = MyDAOFactoryImpl.getFactory();
         ScheduleDao scheduleDao = factory.getScheduleDao();
-        List<WrapperSchedule> byId = scheduleDao.getWrapperScheduleById(employee.getId());
-        if (byId.isEmpty()) {
-            request.setAttribute("notExists", "You don`t have shifts");
+        int id = Integer.parseInt(request.getParameter("id"));
+        List<WrapperSchedule> listById = scheduleDao.getWrapperScheduleById(id);
+        Optional<Employee> optional = factory.getEmployeeDao().getById(id);
+        if (!listById.isEmpty() && optional.isPresent()) {
+            request.setAttribute("employee",optional.get());
+            request.setAttribute("listWrapperByID", listById);
         } else {
-            session.setAttribute("myWrapperSchedule", byId);
+            request.setAttribute("isEmpty", "Not found schedule of Employee");
         }
-        return "mySchedule.jsp";
+        return "editSchedule.jsp";
     }
 }

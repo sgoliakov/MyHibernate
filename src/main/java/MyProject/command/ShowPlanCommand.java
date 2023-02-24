@@ -20,6 +20,6 @@ public class ShowPlanCommand implements CommandInfo {
                 .filter(s -> s.getDay().getDay().isAfter(LocalDate.now()))
                 .toList();
         request.setAttribute("planSchedule", list);
-        return "adminCabinet.jsp";
+        return "showPlan.jsp";
     }
 }

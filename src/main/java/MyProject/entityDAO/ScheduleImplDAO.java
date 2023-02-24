@@ -4,6 +4,8 @@ import MyProject.Intefaces.intefacesDAO.ScheduleDao;
 import MyProject.entity.Employee;
 import MyProject.entity.Schedule;
 import MyProject.entity.WorkDays;
+import MyProject.entity.WorkingShift;
+import MyProject.entity.wrapperEntity.WrapperSchedule;
 import MyProject.entityDAO.FK.EmpDayFK;
 import MyProject.hibernateSolutions.HibernateUtil;
 import org.hibernate.Session;
@@ -12,6 +14,7 @@ import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
@@ -23,15 +26,17 @@ public class ScheduleImplDAO implements ScheduleDao {
     }
 
     @Override
-    public List<Schedule> getById(int id) {
+    public List<WrapperSchedule> getWrapperScheduleById(int id) {
         Session session = sessionFactory.openSession();
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Schedule> criteriaQuery = criteriaBuilder.createQuery(Schedule.class);
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaQuery<WrapperSchedule> criteriaQuery = builder.createQuery(WrapperSchedule.class);
         Root<Schedule> root = criteriaQuery.from(Schedule.class);
-        criteriaQuery.select(root);
-        criteriaQuery.where(criteriaBuilder.equal(root.get("fk").get("employee").get("id"), id));
-        Query<Schedule> query = session.createQuery(criteriaQuery);
-        List<Schedule> schedules = query.getResultList();
+        Path<WorkingShift> path1 = root.get("shift");
+        Path<WorkDays> path2 = root.get("fk").get("workDay");
+        criteriaQuery.select(builder.construct(WrapperSchedule.class, path1, path2));
+        criteriaQuery.where(builder.equal(root.get("fk").get("employee").get("id"), id));
+        Query<WrapperSchedule> query = session.createQuery(criteriaQuery);
+        List<WrapperSchedule> schedules = query.getResultList();
         session.close();
         return schedules;
     }
@@ -60,7 +65,7 @@ public class ScheduleImplDAO implements ScheduleDao {
         session.getTransaction().commit();
         session.close();
     }
-//нету,надо(если работник хочет отменить смену)
+
     @Override
     public int deleteByEmployeeDate(Employee emp, WorkDays day) {
         Session session = sessionFactory.openSession();
