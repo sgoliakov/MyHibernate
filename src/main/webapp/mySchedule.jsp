@@ -15,9 +15,8 @@
 <с:forEach items="${sessionScope.myWrapperSchedule}" var="shift">
     <p>${shift.day} : ${shift.shift}</p>
 </с:forEach>
-<%--@elvariable id="notExists" type="String"--%>
 <с:if test="${not empty requestScope.notExists}">
-    <p style="color: red">${notExists}</p>
+    <p style="color: red">${requestScope.notExists}</p>
 </с:if>
 <form method="post" action="controller?action=main">
     <input type="submit" value="Go to main"/>

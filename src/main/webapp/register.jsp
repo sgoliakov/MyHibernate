@@ -5,8 +5,8 @@
     <title>Register</title>
 </head>
 <body>
-<c:if test="${not empty requestScope.notAdd}"><%--@elvariable id="notAdd" type="String"--%>
-    <p style="color:red;">${notAdd}</p>
+<c:if test="${not empty requestScope.notAdd}">
+    <p style="color:red;">${requestScope.notAdd}</p>
 </c:if>
 <form method="post" action="controller?action=register">
     <p>nickName <label>

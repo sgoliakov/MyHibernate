@@ -5,8 +5,8 @@
     <title>Login</title>
 </head>
 <body>
-<с:if test="${not empty requestScope.notUser}"><%--@elvariable id="notUser" type="String"--%>
-    <p style="color:red;">${notUser}</p>
+<с:if test="${not empty requestScope.notUser}">
+    <p style="color:red;">${requestScope.notUser}</p>
 </с:if>
 <form method="post" action="controller?action=login">
     <p>Name:<label>

@@ -34,8 +34,7 @@
     <c:otherwise>
         <c:choose>
             <c:when test="${sessionScope.employee.admin == false}">
-                <%--@elvariable id="freeSchedules" type="java.util.List"--%>
-                <c:forEach items="${freeSchedules}" var="shift">
+                <c:forEach items="${requestScope.freeSchedules}" var="shift">
                     <form method="post" action="controller?action=add_shift_into_my_schedule">
                         <input type="hidden" name="id" value="${shift.id}"/>
                         <p> ${shift} <input type="submit" value="Add shift to my schedule"/></p>

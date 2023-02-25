@@ -12,8 +12,7 @@
     <p style="color: blue">"${requestScope.delete}"</p>
 </c:if>
 <c:choose>
-    <%--@elvariable id="employees" type="java.util.List"--%>
-    <c:when test="${not empty employees}">
+    <c:when test="${not empty requestScope.employees}">
         <table cellpadding="1" cellspacing="1" border="1">
             <tr>
                 <td>Name</td>
@@ -22,7 +21,7 @@
                 <td>phone</td>
                 <td>delete</td>
             </tr>
-            <c:forEach items="${employees}" var="employee">
+            <c:forEach items="${requestScope.employees}" var="employee">
                 <tr>
                     <c:choose>
                         <c:when test="${employee.admin == false}">

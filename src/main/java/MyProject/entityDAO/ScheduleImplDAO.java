@@ -8,8 +8,10 @@ import MyProject.entity.WorkingShift;
 import MyProject.entity.wrapperEntity.WrapperSchedule;
 import MyProject.entityDAO.FK.EmpDayFK;
 import MyProject.hibernateSolutions.HibernateUtil;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -27,17 +29,20 @@ public class ScheduleImplDAO implements ScheduleDao {
 
     @Override
     public List<WrapperSchedule> getWrapperScheduleById(int id) {
-        Session session = sessionFactory.openSession();
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaQuery<WrapperSchedule> criteriaQuery = builder.createQuery(WrapperSchedule.class);
-        Root<Schedule> root = criteriaQuery.from(Schedule.class);
-        Path<WorkingShift> path1 = root.get("shift");
-        Path<WorkDays> path2 = root.get("fk").get("workDay");
-        criteriaQuery.select(builder.construct(WrapperSchedule.class, path1, path2));
-        criteriaQuery.where(builder.equal(root.get("fk").get("employee").get("id"), id));
-        Query<WrapperSchedule> query = session.createQuery(criteriaQuery);
-        List<WrapperSchedule> schedules = query.getResultList();
-        session.close();
+        List<WrapperSchedule> schedules = null;
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder builder = session.getCriteriaBuilder();
+            CriteriaQuery<WrapperSchedule> criteriaQuery = builder.createQuery(WrapperSchedule.class);
+            Root<Schedule> root = criteriaQuery.from(Schedule.class);
+            Path<WorkingShift> path1 = root.get("shift");
+            Path<WorkDays> path2 = root.get("fk").get("workDay");
+            criteriaQuery.select(builder.construct(WrapperSchedule.class, path1, path2));
+            criteriaQuery.where(builder.equal(root.get("fk").get("employee").get("id"), id));
+            Query<WrapperSchedule> query = session.createQuery(criteriaQuery);
+            schedules = query.getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return schedules;
     }
 
@@ -59,37 +64,49 @@ public class ScheduleImplDAO implements ScheduleDao {
 
     @Override
     public void add(Schedule schedule) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.save(schedule);
-        session.getTransaction().commit();
-        session.close();
+        Transaction txn = null;
+        try (Session session = sessionFactory.openSession()) {
+            txn = session.beginTransaction();
+            session.save(schedule);
+            txn.commit();
+        } catch (Exception e) {
+            if (txn != null) txn.rollback();
+            e.printStackTrace();
+        }
     }
 
     @Override
     public int deleteByEmployeeDate(Employee emp, WorkDays day) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        EmpDayFK fk = new EmpDayFK();
-        fk.setEmployee(emp);
-        fk.setWorkDay(day);
-        String hql = "DELETE FROM Schedule " +
-                "WHERE id = :employee_id";
-        int result = session.createQuery(hql)
-                .setParameter("employee_id", fk)
-                .executeUpdate();
-        session.getTransaction().commit();
-        session.close();
+        Transaction txn = null;
+        int result = 0;
+        try (Session session = sessionFactory.openSession()) {
+            txn = session.beginTransaction();
+            EmpDayFK fk = new EmpDayFK();
+            fk.setEmployee(emp);
+            fk.setWorkDay(day);
+            String hql = "DELETE FROM Schedule WHERE id = :employee_id";
+            result = session.createQuery(hql)
+                    .setParameter("employee_id", fk)
+                    .executeUpdate();
+            txn.commit();
+        } catch (HibernateException e) {
+            if (txn != null) txn.rollback();
+            e.printStackTrace();
+        }
         return result;
     }
 
     @Override
     public void deleteAll() {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        String hql = "DELETE FROM Schedule";
-        session.createQuery(hql).executeUpdate();
-        session.getTransaction().commit();
-        session.close();
+        Transaction txn = null;
+        try (Session session = sessionFactory.openSession()) {
+            txn = session.beginTransaction();
+            String hql = "DELETE FROM Schedule";
+            session.createQuery(hql).executeUpdate();
+            txn.commit();
+        } catch (HibernateException e) {
+            if (txn != null) txn.rollback();
+            e.printStackTrace();
+        }
     }
 }

@@ -3,13 +3,12 @@ package MyProject.entityDAO;
 import MyProject.Intefaces.intefacesDAO.FreeScheduleDao;
 import MyProject.Intefaces.intefacesDAO.WorkDaysDao;
 import MyProject.Intefaces.intefacesDAO.WorkingShiftDao;
-import MyProject.entity.FreeSchedule;
-import MyProject.entity.Plan;
-import MyProject.entity.WorkDays;
-import MyProject.entity.WorkingShift;
+import MyProject.entity.*;
 import MyProject.hibernateSolutions.HibernateUtil;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,28 +23,35 @@ public class FreeScheduleImplDAO implements FreeScheduleDao {
 
     @Override
     public List<FreeSchedule> getAll() {
-        Session session = sessionFactory.openSession();
-        List<FreeSchedule> freeSchedules = session.createQuery(
-                        "select f from FreeSchedule f", FreeSchedule.class)
-                .getResultList();
-        session.close();
+        List<FreeSchedule> freeSchedules = null;
+        try (Session session = sessionFactory.openSession()) {
+            freeSchedules = session.createQuery(
+                            "select f from FreeSchedule f", FreeSchedule.class)
+                    .getResultList();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
         return freeSchedules;
     }
 
     @Override
     public void createAll(WorkDaysDao workDaysDao, WorkingShiftDao workingShiftDao) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.createSQLQuery("ALTER TABLE freeschedule AUTO_INCREMENT=0").executeUpdate();
-        List<WorkDays> days = workDaysDao.getAll();
-        List<WorkingShift> shifts = workingShiftDao.getAll();
-        List<FreeSchedule> list = getListFreeSchedule(days, shifts);
-        for (FreeSchedule schedule : list) {
-            session.save(schedule);
-            session.flush();
+        Transaction txn = null;
+        try (Session session = sessionFactory.openSession()) {
+            txn = session.beginTransaction();
+            session.createSQLQuery("ALTER TABLE freeschedule AUTO_INCREMENT=0").executeUpdate();
+            List<WorkDays> days = workDaysDao.getAll();
+            List<WorkingShift> shifts = workingShiftDao.getAll();
+            List<FreeSchedule> list = getListFreeSchedule(days, shifts);
+            for (FreeSchedule schedule : list) {
+                session.save(schedule);
+                session.flush();
+            }
+            txn.commit();
+        } catch (HibernateException e) {
+            if (txn != null) txn.rollback();
+            e.printStackTrace();
         }
-        session.getTransaction().commit();
-        session.close();
     }
 
     private List<FreeSchedule> getListFreeSchedule(List<WorkDays> days, List<WorkingShift> shifts) {
@@ -68,42 +74,57 @@ public class FreeScheduleImplDAO implements FreeScheduleDao {
 
     @Override
     public void addFree(Plan p) {
+        Transaction txn = null;
         FreeSchedule freeSchedule = FreeSchedule.builder()
                 .day(p.getDay())
                 .shift(p.getShift())
                 .build();
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.save(freeSchedule);
-        session.getTransaction().commit();
-        session.close();
+        try (Session session = sessionFactory.openSession()) {
+            txn = session.beginTransaction();
+            session.save(freeSchedule);
+            txn.commit();
+        } catch (HibernateException e) {
+            if (txn != null) txn.rollback();
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void removeByID(int id) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        FreeSchedule day = session.get(FreeSchedule.class, id);
-        session.delete(day);
-        session.getTransaction().commit();
-        session.close();
+        Transaction txn = null;
+        try (Session session = sessionFactory.openSession()) {
+            txn = session.beginTransaction();
+            FreeSchedule day = session.get(FreeSchedule.class, id);
+            session.delete(day);
+            txn.commit();
+        } catch (HibernateException e) {
+            if (txn != null) txn.rollback();
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void deleteAll() {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        String hql = "DELETE FROM FreeSchedule";
-        session.createQuery(hql).executeUpdate();
-        session.getTransaction().commit();
-        session.close();
+        Transaction txn = null;
+        try (Session session = sessionFactory.openSession()) {
+            txn = session.beginTransaction();
+            String hql = "DELETE FROM FreeSchedule";
+            session.createQuery(hql).executeUpdate();
+            txn.commit();
+        } catch (HibernateException e) {
+            if (txn != null) txn.rollback();
+            e.printStackTrace();
+        }
     }
 
     @Override
     public Optional<FreeSchedule> getById(int id) {
-        Session session = sessionFactory.openSession();
-        FreeSchedule freeSchedule = session.get(FreeSchedule.class, id);
-        session.close();
+        FreeSchedule freeSchedule = null;
+        try (Session session = sessionFactory.openSession()) {
+            freeSchedule = session.get(FreeSchedule.class, id);
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
         return Optional.ofNullable(freeSchedule);
     }
 }

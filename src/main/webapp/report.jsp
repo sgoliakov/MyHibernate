@@ -24,8 +24,7 @@
             <td>Work day</td>
             <td>Work shift</td>
         </tr>
-        <%--@elvariable id="schedules" type="java.util.List"--%>
-        <c:forEach items="${schedules}" var="free">
+        <c:forEach items="${requestScope.schedules}" var="free">
             <tr>
                 <td>${free.fk.employee.nickName}</td>
                 <td>${free.fk.employee.mail}</td>
@@ -37,16 +36,15 @@
     </table>
 </c:if>
 <br/>
-<c:if test="${not empty requestScope.freeSchedules}"><%--@elvariable id="lastDay" type="date"--%>
-    <p>Осталось свободных смен до - ${lastDay} включительно</p>
+<c:if test="${not empty requestScope.freeSchedules}">
+    <p>Осталось свободных смен до - ${requestScope.lastDay} включительно</p>
     <table cellpadding="1" cellspacing="1" border="1">
         <tr>
             <td>Work day</td>
             <td>Number shift</td>
             <td>Work shift</td>
         </tr>
-        <%--@elvariable id="freeSchedules" type="java.util.List"--%>
-        <c:forEach items="${freeSchedules}" var="free">
+        <c:forEach items="${requestScope.freeSchedules}" var="free">
             <tr>
                 <td>${free.day.day}</td>
                 <td style="text-align: center">${free.shift.id}</td>

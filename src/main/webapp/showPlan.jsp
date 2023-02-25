@@ -2,7 +2,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <html>
 <head>
-    <title>Admin</title>
+    <title>Plan</title>
 </head>
 <body>
 <form method="post" action="controller?action=main">
@@ -14,8 +14,7 @@
 <c:if test="${not empty requestScope.Add}">
     <p style="color: blue">shift added</p>
 </c:if>
-<%--@elvariable id="planSchedule" type="java.util.List"--%>
-<c:forEach items="${planSchedule}" var="shift">
+<c:forEach items="${requestScope.planSchedule}" var="shift">
     <form method="post" action="controller?action=add_new_shift">
         <p>${shift.day} : ${shift.shift}</p>
         <input type="hidden" name="id" value="${shift.id}"/>

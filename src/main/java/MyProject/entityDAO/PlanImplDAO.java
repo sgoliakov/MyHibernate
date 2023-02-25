@@ -7,8 +7,10 @@ import MyProject.entity.Plan;
 import MyProject.entity.WorkDays;
 import MyProject.entity.WorkingShift;
 import MyProject.hibernateSolutions.HibernateUtil;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -27,49 +29,63 @@ public class PlanImplDAO implements PlanDao {
 
     @Override
     public List<Plan> getAll() {
-        Session session = sessionFactory.openSession();
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<Plan> criteriaQuery = criteriaBuilder.createQuery(Plan.class);
-        Root<Plan> root = criteriaQuery.from(Plan.class);
-        criteriaQuery.select(root);
-        Query<Plan> query = session.createQuery(criteriaQuery);
-        List<Plan> daysList = query.getResultList();
-        session.close();
+        List<Plan> daysList = null;
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<Plan> criteriaQuery = criteriaBuilder.createQuery(Plan.class);
+            Root<Plan> root = criteriaQuery.from(Plan.class);
+            criteriaQuery.select(root);
+            Query<Plan> query = session.createQuery(criteriaQuery);
+            daysList = query.getResultList();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
         return daysList;
     }
 
     @Override
     public Optional<Plan> getById(int id) {
-        Session session = sessionFactory.openSession();
-        Plan plan = session.get(Plan.class, id);
-        session.close();
+        Plan plan = null;
+        try (Session session = sessionFactory.openSession()) {
+            plan = session.get(Plan.class, id);
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
         return Optional.ofNullable(plan);
     }
 
     @Override
     public void deleteAll() {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        String hql = "DELETE FROM Plan";
-        session.createQuery(hql).executeUpdate();
-        session.getTransaction().commit();
-        session.close();
+        Transaction txn = null;
+        try (Session session = sessionFactory.openSession()) {
+            txn = session.beginTransaction();
+            String hql = "DELETE FROM Plan";
+            session.createQuery(hql).executeUpdate();
+            txn.commit();
+        } catch (HibernateException e) {
+            if (txn != null) txn.rollback();
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void createPlan(WorkDaysDao workDaysDao, WorkingShiftDao workingShiftDao) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.createSQLQuery("ALTER TABLE plan AUTO_INCREMENT=0").executeUpdate();
-        List<WorkDays> days = workDaysDao.getAll();
-        List<WorkingShift> shifts = workingShiftDao.getAll();
-        List<Plan> list = getPlan(days, shifts);
-        for (Plan plan : list) {
-            session.save(plan);
-            session.flush();
+        Transaction txn = null;
+        try (Session session = sessionFactory.openSession()) {
+            txn = session.beginTransaction();
+            session.createSQLQuery("ALTER TABLE plan AUTO_INCREMENT=0").executeUpdate();
+            List<WorkDays> days = workDaysDao.getAll();
+            List<WorkingShift> shifts = workingShiftDao.getAll();
+            List<Plan> list = getPlan(days, shifts);
+            for (Plan plan : list) {
+                session.save(plan);
+                session.flush();
+            }
+            txn.commit();
+        } catch (HibernateException e) {
+            if (txn != null) txn.rollback();
+            e.printStackTrace();
         }
-        session.getTransaction().commit();
-        session.close();
     }
 
     private List<Plan> getPlan(List<WorkDays> days, List<WorkingShift> shifts) {

@@ -3,8 +3,10 @@ package MyProject.entityDAO;
 import MyProject.Intefaces.intefacesDAO.WorkDaysDao;
 import MyProject.entity.WorkDays;
 import MyProject.hibernateSolutions.HibernateUtil;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -23,56 +25,72 @@ public class WorkDaysImplDAO implements WorkDaysDao {
 
     @Override
     public List<WorkDays> getAll() {
-        Session session = sessionFactory.openSession();
-        CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
-        CriteriaQuery<WorkDays> criteriaQuery = criteriaBuilder.createQuery(WorkDays.class);
-        Root<WorkDays> root = criteriaQuery.from(WorkDays.class);
-        criteriaQuery.select(root);
-        Query<WorkDays> query = session.createQuery(criteriaQuery);
-        List<WorkDays> daysList = query.getResultList();
-        session.close();
+        List<WorkDays> daysList = null;
+        try (Session session = sessionFactory.openSession()) {
+            CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
+            CriteriaQuery<WorkDays> criteriaQuery = criteriaBuilder.createQuery(WorkDays.class);
+            Root<WorkDays> root = criteriaQuery.from(WorkDays.class);
+            criteriaQuery.select(root);
+            Query<WorkDays> query = session.createQuery(criteriaQuery);
+            daysList = query.getResultList();
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
         return daysList;
     }
 
     @Override
     public Optional<WorkDays> getById(int id) {
-        Session session = sessionFactory.openSession();
-        WorkDays day = session.get(WorkDays.class, id);
-        session.close();
+        WorkDays day = null;
+        try (Session session = sessionFactory.openSession()) {
+            day = session.get(WorkDays.class, id);
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
         return Optional.ofNullable(day);
     }
 
     @Override
     public void delete(int id) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        WorkDays day = session.get(WorkDays.class, id);
-        session.delete(day);
-        session.getTransaction().commit();
-        session.close();
+        Transaction txn = null;
+        try (Session session = sessionFactory.openSession()) {
+            txn = session.beginTransaction();
+            WorkDays day = session.get(WorkDays.class, id);
+            session.delete(day);
+            txn.commit();
+        } catch (HibernateException e) {
+            if (txn != null) txn.rollback();
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void deleteAll() {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        String hql = "DELETE FROM WorkDays ";
-        session.createQuery(hql).executeUpdate();
-        session.getTransaction().commit();
-        session.close();
+        Transaction txn = null;
+        try (Session session = sessionFactory.openSession()) {
+            txn = session.beginTransaction();
+            String hql = "DELETE FROM WorkDays ";
+            session.createQuery(hql).executeUpdate();
+        } catch (HibernateException e) {
+            if (txn != null) txn.rollback();
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void createFromDate(LocalDate date) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.createSQLQuery("ALTER TABLE workdays AUTO_INCREMENT=0").executeUpdate();
-        for (int i = 0; i < 30; i++) {
-            WorkDays day = new WorkDays();
-            day.setDay(date.plusDays(i));
-            session.save(day);
+        Transaction txn = null;
+        try (Session session = sessionFactory.openSession()) {
+            txn = session.beginTransaction();
+            session.createSQLQuery("ALTER TABLE workdays AUTO_INCREMENT=0").executeUpdate();
+            for (int i = 0; i < 30; i++) {
+                WorkDays day = new WorkDays();
+                day.setDay(date.plusDays(i));
+                session.save(day);
+            }
+        } catch (HibernateException e) {
+            if (txn != null) txn.rollback();
+            e.printStackTrace();
         }
-        session.getTransaction().commit();
-        session.close();
     }
 }

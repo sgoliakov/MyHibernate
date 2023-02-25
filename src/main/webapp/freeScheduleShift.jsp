@@ -10,8 +10,7 @@
 </form>
 <c:choose>
     <c:when test="${sessionScope.employee.admin == false}">
-        <%--@elvariable id="freeSchedule" type="java.util.List"--%>
-        <c:forEach items="${freeSchedule}" var="shift">
+        <c:forEach items="${requestScope.freeSchedule}" var="shift">
             <form method="post" action="controller?action=add_shift_into_my_schedule">
                 <input type="hidden" name="id" value="${shift.id}"/>
                 <p>${shift.day} : ${shift.shift} - <input type="submit" value="Add"/></p>
@@ -22,8 +21,7 @@
         <c:if test="${not empty requestScope.Remove}">
             <p style="color: blue">"${requestScope.Remove}"</p>
         </c:if>
-        <%--@elvariable id="freeSchedule" type="java.util.List"--%>
-        <c:forEach items="${freeSchedule}" var="shift">
+        <c:forEach items="${requestScope.freeSchedule}" var="shift">
             <form method="post" action="controller?action=remove_shift">
                 <p>${shift.day} : ${shift.shift}</p>
                 <input type="hidden" name="id" value="${shift.id}"/>
