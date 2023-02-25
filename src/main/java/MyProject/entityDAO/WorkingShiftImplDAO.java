@@ -24,7 +24,7 @@ public class WorkingShiftImplDAO implements WorkingShiftDao {
     public WorkingShiftImplDAO() {
         sessionFactory = HibernateUtil.getFactory();
     }
-//нету
+
     @Override
     public Optional<WorkingShift> getById(int id) {
         Session session = sessionFactory.openSession();
@@ -45,34 +45,27 @@ public class WorkingShiftImplDAO implements WorkingShiftDao {
         session.close();
         return shifts;
     }
-//нету
+
     @Override
-    public void add(WorkingShift shift) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.save(shift);
-        session.getTransaction().commit();
-        session.close();
-    }
-//нуту
-    @Override
-    public void update(int id, LocalTime[] params) {
+    public void update(int id, LocalTime start, LocalTime end) {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
         WorkingShift workingShift = session.get(WorkingShift.class, id);
-        workingShift.setStart(params[0]);
-        workingShift.setEnd(params[1]);
+        workingShift.setStart(start);
+        workingShift.setEnd(end);
         session.update(workingShift);
         session.getTransaction().commit();
         session.close();
     }
-//нету
+
     @Override
-    public void deleteByID(int id) {
+    public void deleteAll() {
         Session session = sessionFactory.openSession();
         session.beginTransaction();
-        WorkingShift shift = session.get(WorkingShift.class, id);
-        session.delete(shift);
+        CriteriaBuilder builder = session.getCriteriaBuilder();
+        CriteriaDelete<WorkingShift> criteriaDelete = builder.createCriteriaDelete(WorkingShift.class);
+        criteriaDelete.from(WorkingShift.class);
+        session.createQuery(criteriaDelete).executeUpdate();
         session.getTransaction().commit();
         session.close();
     }
@@ -90,7 +83,7 @@ public class WorkingShiftImplDAO implements WorkingShiftDao {
         session.close();
     }
 
-    private List<WorkingShift> getShift() {
+    private List<WorkingShift> getShift() {//кол смен, начало и конец
         List<WorkingShift> list = new ArrayList<>();
         LocalTime start = LocalTime.of(0, 0);
         LocalTime end = LocalTime.of(4, 0);
@@ -104,17 +97,5 @@ public class WorkingShiftImplDAO implements WorkingShiftDao {
             list.add(workingShift);
         }
         return list;
-    }
-
-    @Override
-    public void deleteAll() {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        CriteriaBuilder builder = session.getCriteriaBuilder();
-        CriteriaDelete<WorkingShift> criteriaDelete = builder.createCriteriaDelete(WorkingShift.class);
-        criteriaDelete.from(WorkingShift.class);
-        session.createQuery(criteriaDelete).executeUpdate();
-        session.getTransaction().commit();
-        session.close();
     }
 }

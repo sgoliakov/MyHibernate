@@ -11,11 +11,7 @@ public interface WorkingShiftDao {
 
     List<WorkingShift> getAll();
 
-    void add(WorkingShift shift);
-
-    void update(int id, LocalTime[] params);
-
-    void deleteByID(int id);
+    void update(int id, LocalTime start,LocalTime end);
 
     void createAll();
 

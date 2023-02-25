@@ -44,7 +44,9 @@
             </c:when>
             <c:otherwise>
                 <p><a href="controller?action=show_plan">Add new shift</a></p>
-                <p><a href="controller?action=free_schedule_shifts">Remove available shift</a></p>
+                <p><a href="controller?action=free_schedule_shifts">Delete available shift</a></p>
+                <p><a href="controller?action=show_shift">Update shift</a></p>
+                <p><a href="controller?action=show_work_day">Delete Work day</a></p>
                 <p><a href="controller?action=show_employees">Show employees</a></p>
                 <p><a href="controller?action=create_month_plan">Create new Month Plan</a></p>
                 <p><a href="controller?action=create_report">Create report</a></p>

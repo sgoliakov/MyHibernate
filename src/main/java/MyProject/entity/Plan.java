@@ -20,8 +20,8 @@ public class Plan implements Serializable, Comparable<Plan> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToOne
-    @JoinColumn(name = "day_id")
+    @ManyToOne
+    @JoinColumn(name = "day_id",referencedColumnName = "id")
     private WorkDays day;
     @OneToOne
     @JoinColumn(name = "shifts_id")

@@ -9,8 +9,6 @@ import java.util.Optional;
 public interface WorkDaysDao {
     List<WorkDays> getAll();
 
-    void add(WorkDays day);
-
     Optional<WorkDays> getById(int id);
 
     void delete(int id);

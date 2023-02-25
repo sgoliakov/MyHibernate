@@ -33,16 +33,7 @@ public class WorkDaysImplDAO implements WorkDaysDao {
         session.close();
         return daysList;
     }
-//нету
-    @Override
-    public void add(WorkDays day) {
-        Session session = sessionFactory.openSession();
-        session.beginTransaction();
-        session.save(day);
-        session.getTransaction().commit();
-        session.close();
-    }
-//нуту
+
     @Override
     public Optional<WorkDays> getById(int id) {
         Session session = sessionFactory.openSession();
@@ -50,7 +41,7 @@ public class WorkDaysImplDAO implements WorkDaysDao {
         session.close();
         return Optional.ofNullable(day);
     }
-//нету
+
     @Override
     public void delete(int id) {
         Session session = sessionFactory.openSession();

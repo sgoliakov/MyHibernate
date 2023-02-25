@@ -28,6 +28,7 @@ public class EmpDayFK implements Serializable {
     @JoinColumn(name = "employee_id")
     private Employee employee;
     @OneToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "work_day_id")
     private WorkDays workDay;
 }

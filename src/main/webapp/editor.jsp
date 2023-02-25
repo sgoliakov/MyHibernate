@@ -7,8 +7,7 @@
 </head>
 <body>
 <c:if test="${not empty sessionScope.updated}">
-    <%--@elvariable id="updated" type=""--%>
-    <p style="color:blue;">${updated}</p>
+    <p style="color:blue;">${sessionScope.updated}</p>
 </c:if>
 <form method="post" action="controller?action=update">
     <p>nickName <label>

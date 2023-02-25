@@ -1,15 +1,12 @@
-import MyProject.Intefaces.intefacesDAO.MyDAOFactory;
-import MyProject.Intefaces.intefacesDAO.WorkDaysDao;
-import MyProject.factory.MyDAOFactoryImpl;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class Main {
     public static void main(String[] args) {
-        MyDAOFactory factory = MyDAOFactoryImpl.getFactory();
-        WorkDaysDao workDaysDao = factory.getWorkDaysDao();
-//        WorkDays build = WorkDays.builder()
-//                .day(LocalDate.of(2024,1,1))
-//                .build();
-       // workDaysDao.delete(61);
+
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("HH:mm");
+        LocalTime d = LocalTime.parse("00:00",format);
+        System.out.println(d);
 
 //        System.out.pr
 //        ScheduleDao scheduleDao = factory.getScheduleDao();
