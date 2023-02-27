@@ -2,12 +2,12 @@ package MyProject.command;
 
 import MyProject.Intefaces.intefacesCommand.CommandInfo;
 import MyProject.Intefaces.intefacesDAO.EmployeeDao;
-import MyProject.Intefaces.intefacesDAO.MyDAOFactory;
+import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
 import MyProject.entity.Employee;
 import MyProject.factory.MyDAOFactoryImpl;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class RegisterCommand implements CommandInfo {
@@ -29,12 +29,11 @@ public class RegisterCommand implements CommandInfo {
                 .build();
         MyDAOFactory myDAOFactory = MyDAOFactoryImpl.getFactory();
         EmployeeDao employeeDao = myDAOFactory.getEmployeeDao();
-        Set<Employee> employees = employeeDao.getAll();
+        Set<Employee> employees = new HashSet<>(employeeDao.getAll());
         String page;
         if (!employees.contains(employee)) {
             employeeDao.add(employee);
-            HttpSession session = request.getSession();
-            session.setAttribute("employee", employee);
+            request.getSession().setAttribute("employee", employee);
             page = "controller?action=main";
         } else {
             request.setAttribute("notAdd", "This employee exists");

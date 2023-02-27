@@ -2,7 +2,7 @@ package MyProject.command;
 
 import MyProject.Intefaces.intefacesCommand.CommandInfo;
 import MyProject.Intefaces.intefacesDAO.FreeScheduleDao;
-import MyProject.Intefaces.intefacesDAO.MyDAOFactory;
+import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
 import MyProject.Intefaces.intefacesDAO.PlanDao;
 import MyProject.entity.Plan;
 import MyProject.factory.MyDAOFactoryImpl;
@@ -20,7 +20,7 @@ public class AddNewShiftCommand implements CommandInfo {
         Optional<Plan> optional = planDao.getById(id);
         if (optional.isPresent()) {
             Plan plan = optional.get();
-            freeScheduleDao.addFree(plan);
+            freeScheduleDao.add(plan);
             request.setAttribute("Add", "added");
         } else request.setAttribute("notAdd", "unsuccessful");
         return "showPlan.jsp";

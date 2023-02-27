@@ -1,19 +1,12 @@
 package MyProject.Intefaces.intefacesDAO;
 
+import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.CommonDAO;
 import MyProject.entity.WorkDays;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
 
-public interface WorkDaysDao {
-    List<WorkDays> getAll();
-
-    Optional<WorkDays> getById(int id);
-
-    void delete(int id);
-
-    void deleteAll();
-
+public interface WorkDaysDao extends CommonDAO<WorkDays> {
     void createFromDate(LocalDate date);
+
+    void deleteByID(int id);
 }

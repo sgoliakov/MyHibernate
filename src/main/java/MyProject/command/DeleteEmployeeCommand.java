@@ -2,7 +2,7 @@ package MyProject.command;
 
 import MyProject.Intefaces.intefacesCommand.CommandInfo;
 import MyProject.Intefaces.intefacesDAO.EmployeeDao;
-import MyProject.Intefaces.intefacesDAO.MyDAOFactory;
+import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
 import MyProject.entity.Employee;
 import MyProject.factory.MyDAOFactoryImpl;
 import jakarta.servlet.http.HttpServletRequest;

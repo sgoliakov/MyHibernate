@@ -1,20 +1,16 @@
 package MyProject.Intefaces.intefacesDAO;
 
+import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.CommonDAO;
 import MyProject.entity.Employee;
 
 import java.util.Optional;
-import java.util.Set;
 
-public interface EmployeeDao {
-    Optional<Employee> getById(int id);
-
-    Set<Employee> getAll();
-
+public interface EmployeeDao extends CommonDAO<Employee> {
     void add(Employee emp);
 
-    void updateByID(int id, String[] params);
-
     void deleteByID(int id);
+
+    void updateByID(int id, String[] params);
 
     Long amountEmp();
 

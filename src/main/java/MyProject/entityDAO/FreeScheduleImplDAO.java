@@ -3,7 +3,10 @@ package MyProject.entityDAO;
 import MyProject.Intefaces.intefacesDAO.FreeScheduleDao;
 import MyProject.Intefaces.intefacesDAO.WorkDaysDao;
 import MyProject.Intefaces.intefacesDAO.WorkingShiftDao;
-import MyProject.entity.*;
+import MyProject.entity.FreeSchedule;
+import MyProject.entity.Plan;
+import MyProject.entity.WorkDays;
+import MyProject.entity.WorkingShift;
 import MyProject.hibernateSolutions.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -73,7 +76,7 @@ public class FreeScheduleImplDAO implements FreeScheduleDao {
     }
 
     @Override
-    public void addFree(Plan p) {
+    public void add(Plan p) {
         Transaction txn = null;
         FreeSchedule freeSchedule = FreeSchedule.builder()
                 .day(p.getDay())
@@ -90,7 +93,7 @@ public class FreeScheduleImplDAO implements FreeScheduleDao {
     }
 
     @Override
-    public void removeByID(int id) {
+    public void deleteByID(int id) {
         Transaction txn = null;
         try (Session session = sessionFactory.openSession()) {
             txn = session.beginTransaction();

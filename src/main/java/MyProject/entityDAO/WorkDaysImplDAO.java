@@ -51,7 +51,7 @@ public class WorkDaysImplDAO implements WorkDaysDao {
     }
 
     @Override
-    public void delete(int id) {
+    public void deleteByID(int id) {
         Transaction txn = null;
         try (Session session = sessionFactory.openSession()) {
             txn = session.beginTransaction();

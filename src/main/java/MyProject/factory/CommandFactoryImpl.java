@@ -23,6 +23,7 @@ public class CommandFactoryImpl implements CommandFactoryInfo {
         commands.put("schedule_by_id", new ShowMyScheduleCommand());
         commands.put("edit_schedule", new EditScheduleEmployee());
         commands.put("delete_schedule_employee", new DeleteScheduleEmployee());
+        commands.put("delete_employees", new DeleteEmployeesCommand());
         commands.put("free_schedule_shifts", new FreeScheduleShiftsCommand());
         commands.put("show_work_day", new ShowWorkDayCommand());
         commands.put("delete_work_day", new DeleteWorkDayCommand());

@@ -2,7 +2,7 @@ package MyProject.command;
 
 import MyProject.Intefaces.intefacesCommand.CommandInfo;
 import MyProject.Intefaces.intefacesDAO.FreeScheduleDao;
-import MyProject.Intefaces.intefacesDAO.MyDAOFactory;
+import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
 import MyProject.entity.Employee;
 import MyProject.entity.FreeSchedule;
 import MyProject.entity.Schedule;
@@ -24,7 +24,7 @@ public class AddShiftCommand implements CommandInfo {
         Optional<FreeSchedule> optional = freeScheduleDao.getById(id);
         if (optional.isPresent()) {
             FreeSchedule freeSchedule = optional.get();
-            freeScheduleDao.removeByID(freeSchedule.getId());
+            freeScheduleDao.deleteByID(freeSchedule.getId());
             EmpDayFK fk = EmpDayFK.builder()
                     .employee(employee)
                     .workDay(freeSchedule.getDay())

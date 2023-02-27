@@ -13,9 +13,8 @@ import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 public class EmployeeImplDAO implements EmployeeDao {
     private static SessionFactory sessionFactory;
@@ -36,19 +35,33 @@ public class EmployeeImplDAO implements EmployeeDao {
     }
 
     @Override
-    public Set<Employee> getAll() {
-        Set<Employee> employees = null;
+    public List<Employee> getAll() {
+        List<Employee> employees = null;
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<Employee> criteriaQuery = criteriaBuilder.createQuery(Employee.class);
             Root<Employee> root = criteriaQuery.from(Employee.class);
             criteriaQuery.select(root);
             Query<Employee> query = session.createQuery(criteriaQuery);
-            employees = new HashSet<>(query.getResultList());
+            employees = query.getResultList();
         } catch (HibernateException e) {
             e.printStackTrace();
         }
         return employees;
+    }
+
+    @Override
+    public void deleteAll() {
+        Transaction txn = null;
+        try (Session session = sessionFactory.openSession()) {
+            txn = session.beginTransaction();
+            String hql = "DELETE FROM Employee ";
+            session.createQuery(hql).executeUpdate();
+            txn.commit();
+        } catch (HibernateException e) {
+            if (txn != null) txn.rollback();
+            e.printStackTrace();
+        }
     }
 
     @Override

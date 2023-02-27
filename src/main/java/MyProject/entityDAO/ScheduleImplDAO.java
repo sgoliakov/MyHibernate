@@ -19,6 +19,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Optional;
 
 public class ScheduleImplDAO implements ScheduleDao {
     private static SessionFactory sessionFactory;
@@ -28,7 +29,7 @@ public class ScheduleImplDAO implements ScheduleDao {
     }
 
     @Override
-    public List<WrapperSchedule> getWrapperScheduleById(int id) {
+    public Optional<List<WrapperSchedule>> getWrapperScheduleById(int id) {
         List<WrapperSchedule> schedules = null;
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -43,7 +44,18 @@ public class ScheduleImplDAO implements ScheduleDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return schedules;
+        return Optional.ofNullable(schedules);
+    }
+
+    @Override
+    public Optional<Schedule> getById(int id) {
+        Schedule schedule = null;
+        try (Session session = sessionFactory.openSession()) {
+            schedule = session.get(Schedule.class, id);
+        } catch (HibernateException e) {
+            e.printStackTrace();
+        }
+        return Optional.ofNullable(schedule);
     }
 
     @Override

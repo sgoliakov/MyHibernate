@@ -1,7 +1,7 @@
 package MyProject.command;
 
 import MyProject.Intefaces.intefacesCommand.CommandInfo;
-import MyProject.Intefaces.intefacesDAO.MyDAOFactory;
+import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
 import MyProject.Intefaces.intefacesDAO.ScheduleDao;
 import MyProject.entity.Employee;
 import MyProject.entity.WorkDays;

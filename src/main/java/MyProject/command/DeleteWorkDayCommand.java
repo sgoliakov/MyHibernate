@@ -1,7 +1,7 @@
 package MyProject.command;
 
 import MyProject.Intefaces.intefacesCommand.CommandInfo;
-import MyProject.Intefaces.intefacesDAO.MyDAOFactory;
+import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
 import MyProject.Intefaces.intefacesDAO.WorkDaysDao;
 import MyProject.entity.WorkDays;
 import MyProject.factory.MyDAOFactoryImpl;
@@ -17,7 +17,7 @@ public class DeleteWorkDayCommand implements CommandInfo {
         WorkDaysDao workDaysDao = factory.getWorkDaysDao();
         Optional<WorkDays> byId = workDaysDao.getById(id);
         if (byId.isPresent()) {
-            workDaysDao.delete(byId.get().getId());
+            workDaysDao.deleteByID(byId.get().getId());
             request.setAttribute("deleted", "deleted is OK");
         } else request.setAttribute("deleted", "deleted is failed");
         return "controller?action=show_work_day";
