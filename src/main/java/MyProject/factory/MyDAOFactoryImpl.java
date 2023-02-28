@@ -18,32 +18,32 @@ public class MyDAOFactoryImpl implements MyDAOFactory {
     }
 
     @Override
-    public EmployeeDao getEmployeeDao() {
-        return new EmployeeImplDAO();
+    public IEmployeeDao getEmployeeDao() {
+        return new EmployeeDAOImpl();
     }
 
     @Override
-    public WorkDaysDao getWorkDaysDao() {
-        return new WorkDaysImplDAO();
+    public IWorkDaysDao getWorkDaysDao() {
+        return new WorkDaysDAOImpl();
     }
 
     @Override
-    public WorkingShiftDao getWorkingShiftDao() {
-        return new WorkingShiftImplDAO();
+    public IWorkingShiftDao getWorkingShiftDao() {
+        return new WorkingShiftDAOImpl();
     }
 
     @Override
-    public ScheduleDao getScheduleDao() {
-        return new ScheduleImplDAO();
+    public IScheduleDao getScheduleDao() {
+        return new ScheduleDAOImpl();
     }
 
     @Override
-    public FreeScheduleDao getFreeScheduleDao() {
-        return new FreeScheduleImplDAO();
+    public IFreeScheduleDao getFreeScheduleDao() {
+        return new FreeScheduleDAOImpl();
     }
 
     @Override
-    public PlanDao getPlanDao() {
-        return new PlanImplDAO();
+    public IPlanDao getPlanDao() {
+        return new PlanDAOImpl();
     }
 }

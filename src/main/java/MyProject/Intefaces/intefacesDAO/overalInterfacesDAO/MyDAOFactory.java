@@ -3,15 +3,15 @@ package MyProject.Intefaces.intefacesDAO.overalInterfacesDAO;
 import MyProject.Intefaces.intefacesDAO.*;
 
 public interface MyDAOFactory {
-    EmployeeDao getEmployeeDao();
+    IEmployeeDao getEmployeeDao();
 
-    WorkDaysDao getWorkDaysDao();
+    IWorkDaysDao getWorkDaysDao();
 
-    WorkingShiftDao getWorkingShiftDao();
+    IWorkingShiftDao getWorkingShiftDao();
 
-    ScheduleDao getScheduleDao();
+    IScheduleDao getScheduleDao();
 
-    FreeScheduleDao getFreeScheduleDao();
+    IFreeScheduleDao getFreeScheduleDao();
 
-    PlanDao getPlanDao();
+    IPlanDao getPlanDao();
 }

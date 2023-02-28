@@ -2,7 +2,16 @@ package MyProject.factory;
 
 import MyProject.Intefaces.intefacesCommand.CommandFactoryInfo;
 import MyProject.Intefaces.intefacesCommand.CommandInfo;
-import MyProject.command.*;
+import MyProject.command.additionCommand.AddNewShiftCommand;
+import MyProject.command.additionCommand.AddShiftCommand;
+import MyProject.command.deleteCommand.*;
+import MyProject.command.editCommand.EditProfileCommand;
+import MyProject.command.editCommand.EditScheduleEmployee;
+import MyProject.command.editCommand.EditorShiftCommand;
+import MyProject.command.mainCommand.*;
+import MyProject.command.showCommand.*;
+import MyProject.command.updateCommand.UpdateProfileCommand;
+import MyProject.command.updateCommand.UpdateShiftCommand;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.HashMap;
@@ -24,7 +33,7 @@ public class CommandFactoryImpl implements CommandFactoryInfo {
         commands.put("edit_schedule", new EditScheduleEmployee());
         commands.put("delete_schedule_employee", new DeleteScheduleEmployee());
         commands.put("delete_employees", new DeleteEmployeesCommand());
-        commands.put("free_schedule_shifts", new FreeScheduleShiftsCommand());
+        commands.put("free_schedule_shifts", new ShowFreeScheduleShiftsCommand());
         commands.put("show_work_day", new ShowWorkDayCommand());
         commands.put("delete_work_day", new DeleteWorkDayCommand());
         commands.put("show_shift", new ShowShiftCommand());
@@ -36,7 +45,7 @@ public class CommandFactoryImpl implements CommandFactoryInfo {
         commands.put("add_new_shift", new AddNewShiftCommand());
         commands.put("remove_shift", new RemoveShiftCommand());
         commands.put("create_month_plan", new CreateMonthPlanCommand());
-        commands.put("create_report", new ReportCommand());
+        commands.put("create_report", new ShowReportCommand());
     }
 
     public static synchronized CommandFactoryInfo getCommandFactory() {

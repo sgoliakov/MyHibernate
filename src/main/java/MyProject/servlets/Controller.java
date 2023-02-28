@@ -13,15 +13,15 @@ import java.io.IOException;
 public class Controller extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        proccessRequest(request, response);
+        processRequest(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        proccessRequest(request, response);
+        processRequest(request, response);
     }
 
-    private void proccessRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         CommandFactoryInfo factory = CommandFactoryImpl.getCommandFactory();
         CommandInfo command = factory.getCommandInfo(request);
         String page = command.execute(request);
