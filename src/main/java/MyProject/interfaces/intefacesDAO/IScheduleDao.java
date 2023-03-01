@@ -1,7 +1,7 @@
-package MyProject.Intefaces.intefacesDAO;
+package MyProject.interfaces.intefacesDAO;
 
-import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.IAddition;
-import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.ICommon;
+import MyProject.interfaces.intefacesDAO.overalInterfacesDAO.IAddition;
+import MyProject.interfaces.intefacesDAO.overalInterfacesDAO.ICommon;
 import MyProject.entity.Employee;
 import MyProject.entity.Schedule;
 import MyProject.entity.WorkDays;

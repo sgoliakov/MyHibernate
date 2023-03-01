@@ -1,8 +1,8 @@
-package MyProject.Intefaces.intefacesDAO;
+package MyProject.interfaces.intefacesDAO;
 
-import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.IAddition;
-import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.ICommon;
-import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.IDelete;
+import MyProject.interfaces.intefacesDAO.overalInterfacesDAO.IAddition;
+import MyProject.interfaces.intefacesDAO.overalInterfacesDAO.ICommon;
+import MyProject.interfaces.intefacesDAO.overalInterfacesDAO.IDelete;
 import MyProject.entity.Employee;
 
 import java.util.Optional;

@@ -1,8 +1,8 @@
 package MyProject.command.editCommand;
 
-import MyProject.Intefaces.intefacesCommand.CommandInfo;
-import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
-import MyProject.Intefaces.intefacesDAO.IWorkingShiftDao;
+import MyProject.interfaces.intefacesCommand.CommandInfo;
+import MyProject.interfaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
+import MyProject.interfaces.intefacesDAO.IWorkingShiftDao;
 import MyProject.entity.WorkingShift;
 import MyProject.factory.MyDAOFactoryImpl;
 import jakarta.servlet.http.HttpServletRequest;

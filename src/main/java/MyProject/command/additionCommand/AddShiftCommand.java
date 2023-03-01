@@ -1,25 +1,27 @@
 package MyProject.command.additionCommand;
 
-import MyProject.Intefaces.intefacesCommand.CommandInfo;
-import MyProject.Intefaces.intefacesDAO.IFreeScheduleDao;
-import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
 import MyProject.entity.Employee;
 import MyProject.entity.FreeSchedule;
 import MyProject.entity.Schedule;
 import MyProject.entityDAO.FK.EmpDayFK;
 import MyProject.factory.MyDAOFactoryImpl;
+import MyProject.interfaces.intefacesCommand.CommandInfo;
+import MyProject.interfaces.intefacesDAO.IFreeScheduleDao;
+import MyProject.interfaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
 import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 
 import java.util.Optional;
 
 public class AddShiftCommand implements CommandInfo {
     @Override
     public String execute(HttpServletRequest request) {
-        HttpSession session = request.getSession();
         MyDAOFactory factory = MyDAOFactoryImpl.getFactory();
         IFreeScheduleDao freeScheduleDao = factory.getFreeScheduleDao();
-        Employee employee = (Employee) session.getAttribute("employee");
+        Object o = request.getSession().getAttribute("employee");
+        Employee employee;
+        if (o instanceof Employee) {
+            employee = (Employee) o;
+        } else return "controller?action=main";
         int id = Integer.parseInt(request.getParameter("id"));
         Optional<FreeSchedule> optional = freeScheduleDao.getById(id);
         if (optional.isPresent()) {

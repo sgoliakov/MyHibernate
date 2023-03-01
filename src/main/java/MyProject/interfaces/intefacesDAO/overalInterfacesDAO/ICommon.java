@@ -1,4 +1,4 @@
-package MyProject.Intefaces.intefacesDAO.overalInterfacesDAO;
+package MyProject.interfaces.intefacesDAO.overalInterfacesDAO;
 
 import java.util.List;
 import java.util.Optional;

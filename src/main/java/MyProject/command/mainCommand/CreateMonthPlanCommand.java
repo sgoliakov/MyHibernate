@@ -1,8 +1,8 @@
 package MyProject.command.mainCommand;
 
-import MyProject.Intefaces.intefacesCommand.CommandInfo;
-import MyProject.Intefaces.intefacesDAO.*;
-import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
+import MyProject.interfaces.intefacesCommand.CommandInfo;
+import MyProject.interfaces.intefacesDAO.*;
+import MyProject.interfaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
 import MyProject.factory.MyDAOFactoryImpl;
 import jakarta.servlet.http.HttpServletRequest;
 

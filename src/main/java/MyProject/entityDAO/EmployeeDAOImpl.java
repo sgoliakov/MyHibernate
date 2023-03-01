@@ -1,6 +1,6 @@
 package MyProject.entityDAO;
 
-import MyProject.Intefaces.intefacesDAO.IEmployeeDao;
+import MyProject.interfaces.intefacesDAO.IEmployeeDao;
 import MyProject.entity.Employee;
 import MyProject.hibernateSolutions.HibernateUtil;
 import org.hibernate.HibernateException;
@@ -17,14 +17,14 @@ import java.util.List;
 import java.util.Optional;
 
 public class EmployeeDAOImpl implements IEmployeeDao {
-    private static SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
     public EmployeeDAOImpl() {
         sessionFactory = HibernateUtil.getFactory();
     }
 
     @Override
-    public Optional<Employee> getById(int id) {
+    public Optional<Employee> getById(final int id) {
         Employee employee = null;
         try (Session session = sessionFactory.openSession()) {
             employee = session.get(Employee.class, id);
@@ -65,7 +65,7 @@ public class EmployeeDAOImpl implements IEmployeeDao {
     }
 
     @Override
-    public void add(Employee emp) {
+    public void add(final Employee emp) {
         Transaction txn = null;
         try (Session session = sessionFactory.openSession()) {
             txn = session.beginTransaction();
@@ -78,7 +78,7 @@ public class EmployeeDAOImpl implements IEmployeeDao {
     }
 
     @Override
-    public void updateByID(int id, String[] params) {
+    public void updateByID(final int id, String[] params) {
         Transaction txn = null;
         try (Session session = sessionFactory.openSession()) {
             txn = session.beginTransaction();
@@ -97,7 +97,7 @@ public class EmployeeDAOImpl implements IEmployeeDao {
     }
 
     @Override
-    public void deleteByID(int id) {
+    public void deleteByID(final int id) {
         Transaction txn = null;
         try (Session session = sessionFactory.openSession()) {
             txn = session.beginTransaction();
@@ -111,7 +111,7 @@ public class EmployeeDAOImpl implements IEmployeeDao {
     }
 
     @Override
-    public Optional<Employee> getByLogin(String name, String password) {
+    public Optional<Employee> getByLogin(final String name, final String password) {
         Employee employee = null;
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();

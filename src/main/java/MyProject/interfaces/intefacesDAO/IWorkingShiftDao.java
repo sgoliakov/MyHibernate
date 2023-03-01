@@ -1,7 +1,7 @@
-package MyProject.Intefaces.intefacesDAO;
+package MyProject.interfaces.intefacesDAO;
 
-import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.ICommon;
-import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.ICreate;
+import MyProject.interfaces.intefacesDAO.overalInterfacesDAO.ICommon;
+import MyProject.interfaces.intefacesDAO.overalInterfacesDAO.ICreate;
 import MyProject.entity.WorkingShift;
 
 import java.time.LocalTime;

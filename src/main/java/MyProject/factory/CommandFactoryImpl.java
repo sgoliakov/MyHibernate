@@ -1,7 +1,7 @@
 package MyProject.factory;
 
-import MyProject.Intefaces.intefacesCommand.CommandFactoryInfo;
-import MyProject.Intefaces.intefacesCommand.CommandInfo;
+import MyProject.interfaces.intefacesCommand.CommandFactoryInfo;
+import MyProject.interfaces.intefacesCommand.CommandInfo;
 import MyProject.command.additionCommand.AddNewShiftCommand;
 import MyProject.command.additionCommand.AddShiftCommand;
 import MyProject.command.deleteCommand.*;

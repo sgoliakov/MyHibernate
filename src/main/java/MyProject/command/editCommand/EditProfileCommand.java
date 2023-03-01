@@ -1,6 +1,6 @@
 package MyProject.command.editCommand;
 
-import MyProject.Intefaces.intefacesCommand.CommandInfo;
+import MyProject.interfaces.intefacesCommand.CommandInfo;
 import jakarta.servlet.http.HttpServletRequest;
 
 public class EditProfileCommand implements CommandInfo {

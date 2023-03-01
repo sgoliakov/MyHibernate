@@ -1,7 +1,7 @@
 package MyProject.servlets;
 
-import MyProject.Intefaces.intefacesCommand.CommandFactoryInfo;
-import MyProject.Intefaces.intefacesCommand.CommandInfo;
+import MyProject.interfaces.intefacesCommand.CommandFactoryInfo;
+import MyProject.interfaces.intefacesCommand.CommandInfo;
 import MyProject.factory.CommandFactoryImpl;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;

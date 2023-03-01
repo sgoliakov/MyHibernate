@@ -1,12 +1,11 @@
 package MyProject.command.showCommand;
 
-import MyProject.Intefaces.intefacesCommand.CommandInfo;
-import MyProject.Intefaces.intefacesDAO.*;
-import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
 import MyProject.entity.FreeSchedule;
 import MyProject.entity.Schedule;
 import MyProject.entity.WorkDays;
 import MyProject.factory.MyDAOFactoryImpl;
+import MyProject.interfaces.intefacesCommand.CommandInfo;
+import MyProject.interfaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.time.LocalDate;
@@ -16,16 +15,12 @@ public class ShowReportCommand implements CommandInfo {
     @Override
     public String execute(HttpServletRequest request) {
         MyDAOFactory factory = MyDAOFactoryImpl.getFactory();
-        IEmployeeDao employeeDao = factory.getEmployeeDao();
-        Long amountEmp = employeeDao.amountEmp();
-        IScheduleDao scheduleDao = factory.getScheduleDao();
-        List<Schedule> list = scheduleDao.getAll();
-        IFreeScheduleDao freeScheduleDao = factory.getFreeScheduleDao();
-        List<FreeSchedule> freeList = freeScheduleDao.getAll();
+        Long amountEmp = factory.getEmployeeDao().amountEmp();
+        List<Schedule> list = factory.getScheduleDao().getAll();
+        List<FreeSchedule> freeList = factory.getFreeScheduleDao().getAll();
         LocalDate date = LocalDate.now();
-        IWorkDaysDao workDaysDao = factory.getWorkDaysDao();
-        List<WorkDays> all = workDaysDao.getAll();
-        WorkDays workDay = all.get(all.size() - 1);
+        List<WorkDays> daysList = factory.getWorkDaysDao().getAll();
+        WorkDays workDay = daysList.get(daysList.size() - 1);
         LocalDate lastDay = workDay.getDay();
         request.setAttribute("dayReport", date);
         request.setAttribute("lastDay", lastDay);

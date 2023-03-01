@@ -1,7 +1,7 @@
 package MyProject.factory;
 
-import MyProject.Intefaces.intefacesDAO.*;
-import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
+import MyProject.interfaces.intefacesDAO.*;
+import MyProject.interfaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
 import MyProject.entityDAO.*;
 
 public class MyDAOFactoryImpl implements MyDAOFactory {

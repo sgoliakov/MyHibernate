@@ -1,4 +1,4 @@
-package MyProject.Intefaces.intefacesCommand;
+package MyProject.interfaces.intefacesCommand;
 
 import jakarta.servlet.http.HttpServletRequest;
 

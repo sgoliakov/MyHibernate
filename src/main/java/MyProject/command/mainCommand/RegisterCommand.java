@@ -1,8 +1,8 @@
 package MyProject.command.mainCommand;
 
-import MyProject.Intefaces.intefacesCommand.CommandInfo;
-import MyProject.Intefaces.intefacesDAO.IEmployeeDao;
-import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
+import MyProject.interfaces.intefacesCommand.CommandInfo;
+import MyProject.interfaces.intefacesDAO.IEmployeeDao;
+import MyProject.interfaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
 import MyProject.entity.Employee;
 import MyProject.factory.MyDAOFactoryImpl;
 import jakarta.servlet.http.HttpServletRequest;
@@ -18,13 +18,13 @@ public class RegisterCommand implements CommandInfo {
         String mail = request.getParameter("mail");
         String phone = request.getParameter("phone");
         String password = request.getParameter("password");
-        boolean admin = Boolean.parseBoolean(request.getParameter("admin"));
+        boolean isAdmin = Boolean.parseBoolean(request.getParameter("admin"));
         Employee employee = Employee.builder()
                 .nickName(nickName)
                 .lastName(lastName)
                 .mail(mail)
                 .phone(phone)
-                .isAdmin(admin)
+                .isAdmin(isAdmin)
                 .password(password)
                 .build();
         MyDAOFactory myDAOFactory = MyDAOFactoryImpl.getFactory();

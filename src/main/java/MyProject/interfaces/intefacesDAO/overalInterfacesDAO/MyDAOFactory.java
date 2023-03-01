@@ -1,6 +1,6 @@
-package MyProject.Intefaces.intefacesDAO.overalInterfacesDAO;
+package MyProject.interfaces.intefacesDAO.overalInterfacesDAO;
 
-import MyProject.Intefaces.intefacesDAO.*;
+import MyProject.interfaces.intefacesDAO.*;
 
 public interface MyDAOFactory {
     IEmployeeDao getEmployeeDao();

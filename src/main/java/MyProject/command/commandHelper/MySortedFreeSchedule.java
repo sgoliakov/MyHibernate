@@ -8,7 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 
 public class MySortedFreeSchedule {
-    public static synchronized List<FreeSchedule> getAvailableFreeSchedule(List<WrapperSchedule> mySchedule, List<FreeSchedule> freeSchedules) {
+    public static List<FreeSchedule> getAvailableFreeSchedule(List<WrapperSchedule> mySchedule, List<FreeSchedule> freeSchedules) {
         return freeSchedules.stream()
                 .filter(s -> s.getDay().getDay().isAfter(LocalDate.now()))
                 .filter(s -> {

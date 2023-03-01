@@ -1,6 +1,6 @@
 package MyProject.entityDAO;
 
-import MyProject.Intefaces.intefacesDAO.IScheduleDao;
+import MyProject.interfaces.intefacesDAO.IScheduleDao;
 import MyProject.entity.Employee;
 import MyProject.entity.Schedule;
 import MyProject.entity.WorkDays;
@@ -22,14 +22,14 @@ import java.util.List;
 import java.util.Optional;
 
 public class ScheduleDAOImpl implements IScheduleDao {
-    private static SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
     public ScheduleDAOImpl() {
         sessionFactory = HibernateUtil.getFactory();
     }
 
     @Override
-    public Optional<List<WrapperSchedule>> getWrapperScheduleById(int id) {
+    public Optional<List<WrapperSchedule>> getWrapperScheduleById(final int id) {
         List<WrapperSchedule> schedules = null;
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
@@ -48,7 +48,7 @@ public class ScheduleDAOImpl implements IScheduleDao {
     }
 
     @Override
-    public Optional<Schedule> getById(int id) {
+    public Optional<Schedule> getById(final int id) {
         Schedule schedule = null;
         try (Session session = sessionFactory.openSession()) {
             schedule = session.get(Schedule.class, id);
@@ -75,7 +75,7 @@ public class ScheduleDAOImpl implements IScheduleDao {
     }
 
     @Override
-    public void add(Schedule schedule) {
+    public void add(final Schedule schedule) {
         Transaction txn = null;
         try (Session session = sessionFactory.openSession()) {
             txn = session.beginTransaction();
@@ -88,7 +88,7 @@ public class ScheduleDAOImpl implements IScheduleDao {
     }
 
     @Override
-    public int deleteByEmployeeDate(Employee emp, WorkDays day) {
+    public int deleteByEmployeeDate(final Employee emp, final WorkDays day) {
         Transaction txn = null;
         int result = 0;
         try (Session session = sessionFactory.openSession()) {

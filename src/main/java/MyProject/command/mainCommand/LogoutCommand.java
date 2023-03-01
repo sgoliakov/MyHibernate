@@ -1,6 +1,6 @@
 package MyProject.command.mainCommand;
 
-import MyProject.Intefaces.intefacesCommand.CommandInfo;
+import MyProject.interfaces.intefacesCommand.CommandInfo;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 

@@ -1,7 +1,7 @@
 package MyProject.entityDAO;
 
-import MyProject.Intefaces.intefacesDAO.IPlanDao;
-import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
+import MyProject.interfaces.intefacesDAO.IPlanDao;
+import MyProject.interfaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
 import MyProject.entity.Plan;
 import MyProject.entity.WorkDays;
 import MyProject.entity.WorkingShift;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class PlanDAOImpl implements IPlanDao {
-    private static SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
     public PlanDAOImpl() {
         sessionFactory = HibernateUtil.getFactory();
@@ -44,7 +44,7 @@ public class PlanDAOImpl implements IPlanDao {
     }
 
     @Override
-    public Optional<Plan> getById(int id) {
+    public Optional<Plan> getById(final int id) {
         Plan plan = null;
         try (Session session = sessionFactory.openSession()) {
             plan = session.get(Plan.class, id);

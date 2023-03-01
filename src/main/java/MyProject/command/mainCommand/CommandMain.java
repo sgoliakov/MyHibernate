@@ -1,8 +1,8 @@
 package MyProject.command.mainCommand;
 
-import MyProject.Intefaces.intefacesCommand.CommandInfo;
-import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
-import MyProject.Intefaces.intefacesDAO.IWorkDaysDao;
+import MyProject.interfaces.intefacesCommand.CommandInfo;
+import MyProject.interfaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
+import MyProject.interfaces.intefacesDAO.IWorkDaysDao;
 import MyProject.command.commandHelper.MySortedFreeSchedule;
 import MyProject.entity.Employee;
 import MyProject.entity.FreeSchedule;
@@ -19,8 +19,8 @@ public class CommandMain implements CommandInfo {
     @Override
     public String execute(HttpServletRequest request) {
         MyDAOFactory factory = MyDAOFactoryImpl.getFactory();
-        Employee employee = (Employee) request.getSession().getAttribute("employee");
-        if (employee != null) {
+        Object o = request.getSession().getAttribute("employee");
+        if (o instanceof Employee employee) {
             List<FreeSchedule> allFreeSchedules = factory.getFreeScheduleDao().getAll();
             Optional<List<WrapperSchedule>> opt = factory.getScheduleDao().getWrapperScheduleById(employee.getId());
             List<WrapperSchedule> schedules = opt.orElseGet(ArrayList::new);

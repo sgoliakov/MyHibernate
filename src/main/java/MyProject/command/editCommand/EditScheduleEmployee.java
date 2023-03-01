@@ -1,8 +1,8 @@
 package MyProject.command.editCommand;
 
-import MyProject.Intefaces.intefacesCommand.CommandInfo;
-import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
-import MyProject.Intefaces.intefacesDAO.IScheduleDao;
+import MyProject.interfaces.intefacesCommand.CommandInfo;
+import MyProject.interfaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
+import MyProject.interfaces.intefacesDAO.IScheduleDao;
 import MyProject.entity.Employee;
 import MyProject.entity.wrapperEntity.WrapperSchedule;
 import MyProject.factory.MyDAOFactoryImpl;

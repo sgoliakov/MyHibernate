@@ -1,6 +1,6 @@
 package MyProject.entityDAO;
 
-import MyProject.Intefaces.intefacesDAO.IWorkingShiftDao;
+import MyProject.interfaces.intefacesDAO.IWorkingShiftDao;
 import MyProject.entity.WorkingShift;
 import MyProject.hibernateSolutions.HibernateUtil;
 import org.hibernate.HibernateException;
@@ -20,15 +20,14 @@ import java.util.List;
 import java.util.Optional;
 
 public class WorkingShiftDAOImpl implements IWorkingShiftDao {
-
-    private static SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
     public WorkingShiftDAOImpl() {
         sessionFactory = HibernateUtil.getFactory();
     }
 
     @Override
-    public Optional<WorkingShift> getById(int id) {
+    public Optional<WorkingShift> getById(final int id) {
         WorkingShift shift = null;
         try (Session session = sessionFactory.openSession()) {
             shift = session.get(WorkingShift.class, id);
@@ -55,7 +54,7 @@ public class WorkingShiftDAOImpl implements IWorkingShiftDao {
     }
 
     @Override
-    public void update(int id, LocalTime start, LocalTime end) {
+    public void update(final int id, final LocalTime start, final LocalTime end) {
         Transaction txn = null;
         try (Session session = sessionFactory.openSession()) {
             txn = session.beginTransaction();

@@ -37,5 +37,4 @@ public final class WrapperSchedule {
     public int hashCode() {
         return Objects.hash(shift, day);
     }
-
 }

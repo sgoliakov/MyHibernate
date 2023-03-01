@@ -1,9 +1,9 @@
 package MyProject.command.showCommand;
 
-import MyProject.Intefaces.intefacesCommand.CommandInfo;
-import MyProject.Intefaces.intefacesDAO.IFreeScheduleDao;
-import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
-import MyProject.Intefaces.intefacesDAO.IScheduleDao;
+import MyProject.interfaces.intefacesCommand.CommandInfo;
+import MyProject.interfaces.intefacesDAO.IFreeScheduleDao;
+import MyProject.interfaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
+import MyProject.interfaces.intefacesDAO.IScheduleDao;
 import MyProject.command.commandHelper.MySortedFreeSchedule;
 import MyProject.entity.Employee;
 import MyProject.entity.FreeSchedule;

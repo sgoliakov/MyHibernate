@@ -1,6 +1,6 @@
 package MyProject.entityDAO;
 
-import MyProject.Intefaces.intefacesDAO.IWorkDaysDao;
+import MyProject.interfaces.intefacesDAO.IWorkDaysDao;
 import MyProject.entity.WorkDays;
 import MyProject.hibernateSolutions.HibernateUtil;
 import org.hibernate.HibernateException;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class WorkDaysDAOImpl implements IWorkDaysDao {
-    private static SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
     public WorkDaysDAOImpl() {
         sessionFactory = HibernateUtil.getFactory();
@@ -40,7 +40,7 @@ public class WorkDaysDAOImpl implements IWorkDaysDao {
     }
 
     @Override
-    public Optional<WorkDays> getById(int id) {
+    public Optional<WorkDays> getById(final int id) {
         WorkDays day = null;
         try (Session session = sessionFactory.openSession()) {
             day = session.get(WorkDays.class, id);
@@ -51,7 +51,7 @@ public class WorkDaysDAOImpl implements IWorkDaysDao {
     }
 
     @Override
-    public void deleteByID(int id) {
+    public void deleteByID(final int id) {
         Transaction txn = null;
         try (Session session = sessionFactory.openSession()) {
             txn = session.beginTransaction();
@@ -78,7 +78,7 @@ public class WorkDaysDAOImpl implements IWorkDaysDao {
     }
 
     @Override
-    public void createFromDate(LocalDate date) {
+    public void createFromDate(final LocalDate date) {
         Transaction txn = null;
         try (Session session = sessionFactory.openSession()) {
             txn = session.beginTransaction();

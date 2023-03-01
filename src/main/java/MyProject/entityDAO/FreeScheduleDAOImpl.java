@@ -1,7 +1,7 @@
 package MyProject.entityDAO;
 
-import MyProject.Intefaces.intefacesDAO.IFreeScheduleDao;
-import MyProject.Intefaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
+import MyProject.interfaces.intefacesDAO.IFreeScheduleDao;
+import MyProject.interfaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
 import MyProject.entity.FreeSchedule;
 import MyProject.entity.WorkDays;
 import MyProject.entity.WorkingShift;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class FreeScheduleDAOImpl implements IFreeScheduleDao {
-    private static SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
     public FreeScheduleDAOImpl() {
         sessionFactory = HibernateUtil.getFactory();
@@ -58,7 +58,7 @@ public class FreeScheduleDAOImpl implements IFreeScheduleDao {
     }
 
     @Override
-    public void add(FreeSchedule freeSchedule) {
+    public void add(final FreeSchedule freeSchedule) {
         Transaction txn = null;
         Session session = sessionFactory.openSession();
         try (session) {
@@ -72,7 +72,7 @@ public class FreeScheduleDAOImpl implements IFreeScheduleDao {
     }
 
     @Override
-    public void deleteByID(int id) {
+    public void deleteByID(final int id) {
         Transaction txn = null;
         try (Session session = sessionFactory.openSession()) {
             txn = session.beginTransaction();
@@ -100,7 +100,7 @@ public class FreeScheduleDAOImpl implements IFreeScheduleDao {
     }
 
     @Override
-    public Optional<FreeSchedule> getById(int id) {
+    public Optional<FreeSchedule> getById(final int id) {
         FreeSchedule freeSchedule = null;
         try (Session session = sessionFactory.openSession()) {
             freeSchedule = session.get(FreeSchedule.class, id);
