@@ -11,6 +11,7 @@
         <servlet-name>Register</servlet-name>
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
+
     <filter>
         <filter-name>AuthorizationFilter</filter-name>
         <filter-class>MyProject.filters.AuthorizationFilter</filter-class>
@@ -22,9 +23,8 @@
     <filter-mapping>
         <filter-name>AuthorizationFilter</filter-name>
         <servlet-name>Controller</servlet-name>
-        <url-pattern>/login.jsp</url-pattern>
-        <url-pattern>/register.jsp</url-pattern>
     </filter-mapping>
+
     <error-page>
         <error-code>404</error-code>
         <location>/error.html</location>

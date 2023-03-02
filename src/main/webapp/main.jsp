@@ -47,7 +47,7 @@
                 <p><a href="controller?action=show_shift">Update shift</a></p>
                 <p><a href="controller?action=show_work_day">Delete Work day</a></p>
                 <p><a href="controller?action=show_employees">Show employees</a></p>
-                <p><a href="controller?action=delete_employees">Delete employees</a></p>
+                <p><a href="controller?action=delete_employees">Delete all employees</a></p>
                 <p><a href="controller?action=create_month_plan">Create new Month Plan</a></p>
                 <p><a href="controller?action=create_report">Create report</a></p>
             </c:otherwise>

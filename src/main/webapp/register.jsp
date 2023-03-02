@@ -10,16 +10,16 @@
 </c:if>
 <form method="post" action="controller?action=register">
     <p>nickName <label>
-        <input type="text" name="nickName" size="10"/>
+        <input type="text" name="nickName" size="10" value="min 3 symbol"/>
     </label></p>
     <p>lastName <label>
-        <input type="text" name="lastName" size="10"/>
+        <input type="text" name="lastName" size="10" value="min 3 symbol"/>
     </label></p>
     <p>mail <label>
-        <input type="text" name="mail" size="10"/>
+        <input type="text" name="mail" size="10" value="must be valid"/>
     </label></p>
     <p>phone <label>
-        <input type="text" name="phone" size="10"/>
+        <input type="text" name="phone" size="10" value="+38"/>
     </label></p>
     <p>password <label>
         <input type="password" name="password" size="10"/>
