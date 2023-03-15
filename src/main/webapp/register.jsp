@@ -8,6 +8,11 @@
 <c:if test="${not empty requestScope.notAdd}">
     <p style="color:red;">${requestScope.notAdd}</p>
 </c:if>
+<c:if test="${not empty requestScope.errors}">
+    <c:forEach items="${requestScope.errors}" var="err">
+        <p style="color:red;">Error: ${err}</p>
+    </c:forEach>
+</c:if>
 <form method="post" action="controller?action=register">
     <p>nickName <label>
         <input type="text" name="nickName" size="10" value="min 3 symbol"/>

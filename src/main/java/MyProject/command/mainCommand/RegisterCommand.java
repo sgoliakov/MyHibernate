@@ -1,5 +1,6 @@
 package MyProject.command.mainCommand;
 
+import MyProject.validators.MyValidator;
 import MyProject.interfaces.intefacesCommand.CommandInfo;
 import MyProject.interfaces.intefacesDAO.IEmployeeDao;
 import MyProject.interfaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
@@ -8,6 +9,7 @@ import MyProject.factory.MyDAOFactoryImpl;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 public class RegisterCommand implements CommandInfo {
@@ -27,6 +29,11 @@ public class RegisterCommand implements CommandInfo {
                 .isAdmin(isAdmin)
                 .password(password)
                 .build();
+        List<String> validate = MyValidator.validate(employee);
+        if (!validate.isEmpty()) {
+            request.setAttribute("errors", validate);
+            return "register.jsp";
+        }
         MyDAOFactory myDAOFactory = MyDAOFactoryImpl.getFactory();
         IEmployeeDao employeeDao = myDAOFactory.getEmployeeDao();
         Set<Employee> employees = new HashSet<>(employeeDao.getAll());

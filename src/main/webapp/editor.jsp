@@ -9,7 +9,7 @@
 <c:if test="${not empty sessionScope.updated}">
     <p style="color:blue;">${sessionScope.updated}</p>
 </c:if>
-<form method="post" action="controller?action=update">
+<form method="post" action="check">
     <p>nickName <label>
         <input type="text" name="nickName" size="10" value="${employee.nickName}"/>
     </label></p>
@@ -25,7 +25,7 @@
     <p>password <label>
         <input type="password" name="password" size="10" value="${employee.password}"/>
     </label></p>
-    <p><input type="submit" value="Update"/></p>
+    <p><input type="submit" value="Validity check"/></p>
 </form>
 <form method="post" action="controller?action=main">
     <input type="submit" value="Go to main"/>

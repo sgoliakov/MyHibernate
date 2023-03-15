@@ -12,6 +12,15 @@
         <url-pattern>/register</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>Check</servlet-name>
+        <jsp-file>/check.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Check</servlet-name>
+        <url-pattern>/check</url-pattern>
+    </servlet-mapping>
+
     <filter>
         <filter-name>AuthorizationFilter</filter-name>
         <filter-class>MyProject.filters.AuthorizationFilter</filter-class>
@@ -22,7 +31,7 @@
     </filter>
     <filter-mapping>
         <filter-name>AuthorizationFilter</filter-name>
-        <servlet-name>Controller</servlet-name>
+        <servlet-name>Check</servlet-name>
     </filter-mapping>
 
     <error-page>

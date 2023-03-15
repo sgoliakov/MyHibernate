@@ -5,6 +5,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.io.Serializable;
 
 @Getter
@@ -21,11 +22,18 @@ public class Employee implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(unique = true)
+    @NotEmpty(message = "shouldn't be empty")
+    @Size(min = 3, max = 30, message = "should be between 3 and 30 char")
     private String nickName;
+    @NotEmpty(message = "shouldn't be empty")
+    @Size(min = 3, max = 30, message = "should be between 3 and 30 char")
     private String lastName;
+    @Email(message = "should be valid")
     private String mail;
+    @Pattern(regexp = "\\+\\d{2}\\d{3}\\d{3}\\d{2}\\d{2}$", message = "should be valid")
     private String phone;
     private boolean isAdmin;
+    @Size(min = 3, max = 30, message = "should be between 3 and 30 char")
     private String password;
 
     @Override
