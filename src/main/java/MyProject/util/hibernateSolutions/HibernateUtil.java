@@ -1,4 +1,4 @@
-package MyProject.hibernateSolutions;
+package MyProject.util.hibernateSolutions;
 
 import org.hibernate.HibernateException;
 import org.hibernate.SessionFactory;

@@ -4,7 +4,7 @@ import MyProject.interfaces.intefacesCommand.CommandInfo;
 import MyProject.interfaces.intefacesDAO.IFreeScheduleDao;
 import MyProject.interfaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;
 import MyProject.interfaces.intefacesDAO.IScheduleDao;
-import MyProject.command.commandHelper.MySortedFreeSchedule;
+import MyProject.util.commandHelper.MySortedFreeSchedule;
 import MyProject.entity.Employee;
 import MyProject.entity.FreeSchedule;
 import MyProject.entity.wrapperEntity.WrapperSchedule;

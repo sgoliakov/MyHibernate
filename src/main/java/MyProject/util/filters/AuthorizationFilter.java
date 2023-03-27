@@ -1,4 +1,4 @@
-package MyProject.filters;
+package MyProject.util.filters;
 
 import jakarta.servlet.*;
 

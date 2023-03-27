@@ -23,7 +23,7 @@
 
     <filter>
         <filter-name>AuthorizationFilter</filter-name>
-        <filter-class>MyProject.filters.AuthorizationFilter</filter-class>
+        <filter-class>MyProject.util.filters.AuthorizationFilter</filter-class>
         <init-param>
             <param-name>status</param-name>
             <param-value>true</param-value>

@@ -7,7 +7,7 @@ import MyProject.entity.WorkDays;
 import MyProject.entity.WorkingShift;
 import MyProject.entity.wrapperEntity.WrapperSchedule;
 import MyProject.entityDAO.FK.EmpDayFK;
-import MyProject.hibernateSolutions.HibernateUtil;
+import MyProject.util.hibernateSolutions.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

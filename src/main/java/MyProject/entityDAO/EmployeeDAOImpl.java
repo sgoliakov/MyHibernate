@@ -2,7 +2,7 @@ package MyProject.entityDAO;
 
 import MyProject.interfaces.intefacesDAO.IEmployeeDao;
 import MyProject.entity.Employee;
-import MyProject.hibernateSolutions.HibernateUtil;
+import MyProject.util.hibernateSolutions.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

@@ -2,7 +2,7 @@ package MyProject.entityDAO;
 
 import MyProject.interfaces.intefacesDAO.IWorkDaysDao;
 import MyProject.entity.WorkDays;
-import MyProject.hibernateSolutions.HibernateUtil;
+import MyProject.util.hibernateSolutions.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

@@ -1,6 +1,8 @@
 SELECT *
 FROM myproject.employee;
 
+truncate table employee;
+
 delete
 from employee;
 

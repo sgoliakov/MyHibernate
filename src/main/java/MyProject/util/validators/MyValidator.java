@@ -1,4 +1,4 @@
-package MyProject.validators;
+package MyProject.util.validators;
 
 import MyProject.entity.Employee;
 import org.hibernate.validator.messageinterpolation.ParameterMessageInterpolator;

@@ -1,4 +1,4 @@
-package MyProject.command.commandHelper;
+package MyProject.util.commandHelper;
 
 import MyProject.entity.FreeSchedule;
 import MyProject.entity.wrapperEntity.WrapperSchedule;

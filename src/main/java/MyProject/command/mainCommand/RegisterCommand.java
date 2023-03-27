@@ -1,6 +1,6 @@
 package MyProject.command.mainCommand;
 
-import MyProject.validators.MyValidator;
+import MyProject.util.validators.MyValidator;
 import MyProject.interfaces.intefacesCommand.CommandInfo;
 import MyProject.interfaces.intefacesDAO.IEmployeeDao;
 import MyProject.interfaces.intefacesDAO.overalInterfacesDAO.MyDAOFactory;

@@ -6,7 +6,7 @@ import MyProject.entity.Plan;
 import MyProject.entity.WorkDays;
 import MyProject.entity.WorkingShift;
 import MyProject.factory.MyDAOFactoryImpl;
-import MyProject.hibernateSolutions.HibernateUtil;
+import MyProject.util.hibernateSolutions.HibernateUtil;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
