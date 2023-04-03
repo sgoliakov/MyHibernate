@@ -18,6 +18,7 @@ import java.io.Serializable;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 @Builder
 @DynamicUpdate
 @DynamicInsert
